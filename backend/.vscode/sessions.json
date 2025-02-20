@@ -42,6 +42,16 @@
                 "commands": [
                     "clear; Write-Host 'ALL' -ForegroundColor Yellow; docker ps -a; echo -; Write-Host 'RUN' -ForegroundColor Green; docker ps"
                 ]
+            },
+            {
+                "name": "git",
+                "autoExecuteCommands": true,
+                "icon": "git-branch",
+                "color": "terminal.ansiYellow",
+                "shellPath": "C:\\FilePrograms\\programs\\Git\\bin\\bash.exe",
+                "commands": [
+                    "cd ../ ; clear;"
+                ]
             }
         ]
     }
