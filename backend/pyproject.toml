@@ -1,0 +1,28 @@
+[project]
+name = "fasapi-basic"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.111.0",
+    "uvicorn[standard]>=0.29.0",
+    "pydantic[email]>=2.7.1",
+    "pydantic-settings>=2.2.1",
+    "sqlalchemy[asyncio]>=2.0.30",
+    "asyncpg>=0.29.0",
+    "alembic>=1.13.1",
+    "gunicorn>=23.0.0",
+    "aiosmtplib>=3.0.2",
+    "taskiq>=0.11.11",
+    "taskiq-aio-pika>=0.4.1",
+    "psycopg>=3.2.4",
+    "psycopg-binary>=3.2.4",
+    "bcrypt>=4.2.1",
+    "pyjwt[crypto]==2.8.0",
+]
+
+[dependency-groups]
+lint = [
+    "black>=25.1.0",
+]
