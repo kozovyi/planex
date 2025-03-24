@@ -1,12 +1,15 @@
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import ORJSONResponse
 from fastapi import FastAPI, status
 
 from contextlib import asynccontextmanager
 import uvicorn
+import os
 
 from core.config import settings
 from core.database import async_db_helper
+from api.api_v1 import api_v1
+
+os.environ["APP_CONFIG__DB__HOST"] = "localhost"
 
 origins = [
     "http://localhost",
@@ -25,7 +28,8 @@ async def lifespan(app: FastAPI):
     await async_db_helper.dispose()
 
 
-app = FastAPI(lifespan=lifespan, default_response_class=ORJSONResponse)
+app = FastAPI(lifespan=lifespan)
+app.include_router(api_v1, prefix=settings.api.prefix)
 
 app.add_middleware(
     CORSMiddleware,
@@ -34,11 +38,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.get("/")
-async def default():
-    return {"status": status.HTTP_200_OK}
 
 
 if __name__ == "__main__":

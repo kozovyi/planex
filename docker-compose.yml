@@ -1,16 +1,42 @@
 services:
 
-  db:
+  db-postgres:
     image: postgres
-    container_name: db
+    container_name: planex-db-postgres
     restart: always
-    shm_size: 128mb
-
+    shm_size: 1024mb
     environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
-
+      POSTGRES_PASSWORD: ${APP_CONFIG__DB__PASS}
+      POSTGRES_USER: ${APP_CONFIG__DB__USER}
+      POSTGRES_DB: ${APP_CONFIG__DB__NAME}
     ports:
       - "5432:5432"
-    
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+
+  db-mongodb:
+    image: mongo
+    container_name: planex-db-mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${APP_CONFIG__MONGO_DB__USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${APP_CONFIG__MONGO_DB__PASS}
+    ports:
+      - "27017:27017"
+
+  app-backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: planex-app
+    depends_on:
+      - db-postgres
+      - db-mongodb
+    ports: 
+      - "8000:8000"
+    command: >
+      sh -c "python3 run.py"  
+
+volumes:
+  postgres_data:
