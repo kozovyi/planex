@@ -5,6 +5,7 @@ from uuid import UUID, uuid1
 
 from core.models.permision import Permissions
 from core.models.base import PermissionStatus
+from schemas.permission_schema import PermissionCreate
 
 
 class PermissionRepo:
@@ -18,11 +19,10 @@ class PermissionRepo:
 
     @staticmethod
     async def add_permission(
-        board_id: UUID, user_id: UUID, permission_status: PermissionStatus, session: AsyncSession
+        board_id: UUID, user_id: UUID, permission_data: PermissionCreate, session: AsyncSession
     ):
-        permission = Permissions(board_id=board_id, user_id=user_id, permission_status=permission_status)
+        permission = Permissions(board_id=board_id, user_id=user_id, **permission_data)
         session.add(permission)
-        await session.commit()
         return permission
 
     @staticmethod
@@ -30,9 +30,7 @@ class PermissionRepo:
         permission: Permissions, new_status: PermissionStatus, session: AsyncSession
     ):
         permission.permission_status = new_status
-        await session.commit()
 
     @staticmethod
     async def delete_permission(permission: Permissions, session: AsyncSession):
         await session.delete(permission)
-        await session.commit()

@@ -10,31 +10,9 @@ from typing import TypedDict
 from uuid import UUID, uuid1
 
 
-from core.models.base import TaskStatus
 from core.models.task import Tasks
-from core.config import settings
 from exceptions.task_exc import bad_filter_exc, task_not_found_exc
-
-
-class TaskCreate(TypedDict):
-    assigned_user_id: UUID
-    title: str
-    description: str
-    status: str
-    tags: str
-    deadline: datetime
-    created_at: datetime
-    positional_num: int
-
-
-class TaskUpdate(TypedDict, total=False):
-    assigned_user_id: UUID
-    title: str
-    description: str
-    status: str
-    tags: str
-    deadline: datetime
-    positional_num: int
+from schemas.task_schema import TaskCreate, TaskUpdate
 
 
 class TaskRepo:
@@ -67,7 +45,6 @@ class TaskRepo:
     ) -> Tasks:
         task = Tasks(user_id=user_id, board_id=board_id, **task_data)
         session.add(task)
-        await session.commit()
         await session.refresh(task)
         return task
 
@@ -75,18 +52,16 @@ class TaskRepo:
     async def delete_task(task_id: UUID, session: AsyncSession):
         task = await TaskRepo.get_task(task_id, session)
         await session.delete(task)
-        await session.commit()
         return {"Message": "Task deleted", "task_id": task_id}
 
     @staticmethod
     async def update_task(
         task: Tasks,
         task_data: TaskUpdate,
-        session: AsyncSession,
     ) -> None:
         for field, value in task_data.items():
             setattr(task, field, value)
-        await session.commit()
+
 
 
 if __name__ == "__main__":

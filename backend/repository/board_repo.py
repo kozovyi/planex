@@ -1,22 +1,13 @@
 from sqlalchemy import select, insert, update, and_, func, delete
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import TypedDict
 from uuid import UUID, uuid1
 
 
 from core.config import settings
 from core.models.board import Boards
 from exceptions.board_exc import bad_filter_exc, board_not_found_exc
-
-class BoardCreate(TypedDict):
-    title: str
-    description: str | None
-
-
-class BoardUpdate(TypedDict, total=False):
-    title: str
-    description: str
+from schemas.board_schema import BoardCreate, BoardUpdate
 
 
 class BoardRepo:
@@ -48,7 +39,6 @@ class BoardRepo:
     ) -> Boards:
         board = Boards(user_id=user_id, **board_data)
         session.add(board)
-        await session.commit()
         await session.refresh(board)
         return board
 
@@ -56,7 +46,6 @@ class BoardRepo:
     async def delete_board(board_id: UUID, session: AsyncSession):
         board = await BoardRepo.get_board(board_id, session, exception=True)
         await session.delete(board)
-        await session.commit()
         return {"Message": "Board deleted", "board_id": board_id}
 
     @staticmethod
@@ -66,4 +55,3 @@ class BoardRepo:
         session: AsyncSession,
     ) -> None:
         await session.execute(update(Boards).where(Boards.id == board.id).values(**board_data))
-        await session.commit()
