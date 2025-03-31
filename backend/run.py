@@ -12,7 +12,7 @@ def main():
             settings.run_gunicorn.port,
             settings.run_gunicorn.workers,
             settings.run_gunicorn.timeout,
-            settings.logger.log_level
+            settings.logger.log_level,
         ),
     )
     app.run()

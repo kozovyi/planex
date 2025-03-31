@@ -1,3 +1,4 @@
+import datetime
 from sqlalchemy.orm import (
     DeclarativeBase,
     Mapped,
@@ -5,10 +6,11 @@ from sqlalchemy.orm import (
     relationship,
     declared_attr,
 )
+from datetime import datetime
 from sqlalchemy import Index, ForeignKey, CheckConstraint, String, text, Float, MetaData
 from sqlalchemy.dialects.postgresql import UUID
-from random import randint
 from typing import Annotated
+from enum import Enum
 import uuid
 
 from utils import camel_case_to_snake_case
@@ -42,8 +44,29 @@ pk = Annotated[
     mapped_column(
         UUID(as_uuid=True),
         primary_key=True,
-        default=lambda: uuid.uuid1(randint(10, 10**12)),
+        default=uuid.uuid4,
     ),
 ]
 
+
+created_at = Annotated[
+    datetime, mapped_column(server_default=text("TIMEZONE('utc', now())"))
+]
+
 # --------/ Enum types /--------
+
+
+class PermissionStatus(Enum):
+    owner = "owner"
+    super_admin = "super_admin"  # може змінювати іншим статус доступу
+    admin = "admin"
+    only_add = "only_add"
+    only_check = "only_check"
+    reader = "reader"
+
+
+class TaskStatus(Enum):
+    planned = "planned"
+    in_progress = "in_progress"
+    finished = "finished"
+    overdue = "overdue"

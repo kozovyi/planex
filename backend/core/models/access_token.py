@@ -16,7 +16,7 @@ if TYPE_CHECKING:
 from core.models.base import Base
 
 
-class AccessToken(Base, SQLAlchemyBaseAccessTokenTable[UserIdType]):
+class AccessTokens(Base, SQLAlchemyBaseAccessTokenTable[UserIdType]):
     user_id: Mapped[UserIdType] = mapped_column(
         ForeignKey("users.id", ondelete="CASCADE"), nullable=False
     )

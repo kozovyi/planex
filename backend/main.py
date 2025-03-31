@@ -9,7 +9,7 @@ from core.config import settings
 from core.database import async_db_helper
 from api.api_v1 import api_v1
 
-os.environ["APP_CONFIG__DB__HOST"] = "localhost"
+# os.environ["APP_CONFIG__DB__HOST"] = "localhost"
 
 origins = [
     "http://localhost",

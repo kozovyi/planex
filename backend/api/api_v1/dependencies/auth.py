@@ -10,7 +10,7 @@ from fastapi_users.authentication.strategy.db import (
 if TYPE_CHECKING:
     from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.models.access_token import AccessToken
+from core.models.access_token import AccessTokens
 from core.database import async_db_helper
 from core.authentication.transport import bearer_transport
 from core.config import settings
@@ -19,12 +19,12 @@ from core.config import settings
 async def get_access_token_db(
     session: Annotated["AsyncSession", Depends(async_db_helper.session_getter)],
 ):
-    yield AccessToken.get_db(session=session)
+    yield AccessTokens.get_db(session=session)
 
 
 def get_database_strategy(
     access_token_db: Annotated[
-        AccessTokenDatabase["AccessToken"], Depends(get_access_token_db)
+        AccessTokenDatabase["AccessTokens"], Depends(get_access_token_db)
     ],
 ) -> DatabaseStrategy:
     return DatabaseStrategy(

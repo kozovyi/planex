@@ -5,6 +5,7 @@ from typing import Literal
 
 BASE_DIR = Path(__file__).parent
 
+
 class DatabaseConfig(BaseModel):
     HOST: str
     PASS: str
@@ -33,20 +34,24 @@ class DatabaseConfig(BaseModel):
     def DB_URL_PSYCOPG(self):
         return f"postgresql+psycopg://{self.USER}:{self.PASS}@{self.HOST}:{self.PORT}/{self.NAME}"
 
-class MongoConfig(BaseModel):
-    PASS: str
-    USER: str
+
+# class MongoConfig(BaseModel):
+#     PASS: str
+#     USER: str
+
 
 class AccessToken(BaseModel):
     lifetime_seconds: int = 3600
     reset_password_token_secret: str
     verification_token_secret: str
 
+
 class ApiV1Prefix:
     prefix: str = "/api_v1"
     user: str = "/user"
     auth: str = "/auth"
     messages: str = "/messages"
+
 
 class ApiPrefix:
     prefix: str = "/api"
@@ -61,14 +66,16 @@ class RunConfig(BaseModel):
     host: str = "127.0.0.1"
     port: int = 8000
 
+
 class RunGunicorn(BaseModel):
     host: str = "0.0.0.0"
     port: int = 8000
     workers: int = 2
     timeout: int = 900
 
+
 class LoggingConfig(BaseModel):
-    log_level: Literal['debug', 'info', 'warning', 'error', 'critical'] = 'info'
+    log_level: Literal["debug", "info", "warning", "error", "critical"] = "info"
     log_format: str = '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"'
 
 
@@ -78,6 +85,7 @@ class SuperUser(BaseModel):
     default_is_active: bool
     default_is_superuser: bool
     default_is_verified: bool
+
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -96,7 +104,7 @@ class Settings(BaseSettings):
     access_token: AccessToken
     super_user: SuperUser
     db: DatabaseConfig
-    mongo_db: MongoConfig
+    # mongo_db: MongoConfig
 
 
-settings = Settings() # type: ignore
+settings = Settings()  # type: ignore

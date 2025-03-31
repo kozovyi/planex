@@ -22,7 +22,7 @@
                 "icon": "code",
                 "color": "terminal.ansiBrightMagenta",
                 "commands": [
-                    ".venv/Scripts/activate; clear;"
+                    ".venv/Scripts/activate; cd ../; clear;"
                 ]
             }
         ]
