@@ -39,6 +39,7 @@ class BoardRepo:
     ) -> Boards:
         board = Boards(user_id=user_id, **board_data)
         session.add(board)
+        await session.commit() 
         await session.refresh(board)
         return board
 

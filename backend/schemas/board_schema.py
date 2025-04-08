@@ -14,7 +14,7 @@ class BoardUpdate(TypedDict, total=False):
 
 class BoardCreateDTO(BaseModel):
     title: str
-    description: str|None = Field(lt=401)
+    description: str|None
 
 class BoardUpdateDTO(BoardCreateDTO):
     pass

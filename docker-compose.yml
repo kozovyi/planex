@@ -14,17 +14,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-
-  db-mongodb:
-    image: mongo
-    container_name: planex-db-mongo
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${APP_CONFIG__MONGO_DB__USER}
-      MONGO_INITDB_ROOT_PASSWORD: ${APP_CONFIG__MONGO_DB__PASS}
-    ports:
-      - "27017:27017"
-
   app-backend:
     build:
       context: .
@@ -32,11 +21,21 @@ services:
     container_name: planex-app
     depends_on:
       - db-postgres
-      - db-mongodb
     ports: 
       - "8000:8000"
     command: >
       sh -c "python3 run.py"  
 
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: planex-jenkins
+    ports:
+      - "8080:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    restart: always
+
 volumes:
   postgres_data:
+  jenkins_home:

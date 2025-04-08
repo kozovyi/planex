@@ -50,7 +50,9 @@ class ApiV1Prefix:
     prefix: str = "/api_v1"
     user: str = "/user"
     auth: str = "/auth"
-    messages: str = "/messages"
+    main: str = "/main"
+    task: str = "/task"
+    board: str = "/board"
 
 
 class ApiPrefix:

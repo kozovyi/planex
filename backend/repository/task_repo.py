@@ -45,6 +45,7 @@ class TaskRepo:
     ) -> Tasks:
         task = Tasks(user_id=user_id, board_id=board_id, **task_data)
         session.add(task)
+        await session.commit()
         await session.refresh(task)
         return task
 
