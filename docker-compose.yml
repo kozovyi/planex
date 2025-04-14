@@ -28,7 +28,7 @@ services:
       db-postgres:
         condition: service_healthy
     entrypoint: >
-      sh -c "pytest -v tests/test_main.py || exit 1"
+      sh -c "pytest --cache-clear -v tests/test_main.py || exit 1"
     restart: "no"
 
   app-backend:
