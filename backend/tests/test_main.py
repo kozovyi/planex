@@ -15,7 +15,7 @@ async def test_register_user():
         response = await client.post("/api/api_v1/main/register", json=user_data)
         assert response.status_code == 200
         assert "id" in response.json()
-        assert response.json()["email"] == user_data["mail"]
+        assert response.json()["email"] == user_data["email"]
 
 @pytest.mark.asyncio
 async def test_login_user():
