@@ -17,7 +17,6 @@ async def test_register_user():
         assert "id" in response.json()
         assert response.json()["email"] == user_data["email"]
 
-
 async def test_login_user():
     async with AsyncClient(
         transport=ASGITransport(app=app),
