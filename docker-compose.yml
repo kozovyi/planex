@@ -15,8 +15,6 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-
-
   app-backend:
     build:
       context: .
