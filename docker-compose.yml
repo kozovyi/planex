@@ -26,9 +26,7 @@ services:
     ports: 
       - "8000:8000"
     command: >
-      sh -c "pytest -v"  
-      sh -c "python3 run.py"  
-      
+      sh -c "pytest -v && python3 run.py"
 
 volumes:
   postgres_data:
