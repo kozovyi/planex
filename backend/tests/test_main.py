@@ -17,6 +17,7 @@ async def test_register_user():
         assert "id" in response.json()
         assert response.json()["email"] == user_data["mail"]
 
+
 @pytest.mark.asyncio
 async def test_login_user():
     async with AsyncClient(
