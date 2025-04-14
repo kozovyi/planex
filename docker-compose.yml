@@ -28,6 +28,7 @@ services:
     command: >
       sh -c "pytest -v"  
       sh -c "python3 run.py"  
+      
 
 volumes:
   postgres_data:
