@@ -1,9 +1,13 @@
 FROM jenkins/jenkins:latest
-
 USER root
 
-RUN apt-get update && \
-    apt-get install -y docker.io && \
-    usermod -aG docker jenkins
+EXPOSE 8080
+
+VOLUME [ "/var/jenkins_home" ]
+
+RUN apt-get update
+RUN apt-get install -y docker.io 
+RUN usermod -a -G docker jenkins
 
 USER jenkins
+

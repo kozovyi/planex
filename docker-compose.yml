@@ -27,17 +27,17 @@ services:
       sh -c "python3 run.py"  
 
 
-  # jenkins:
-  #   build: 
-  #     context: .
-  #     dockerfile: jenkins/Dockerfile
-  #   container_name: planex-jenkins
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - jenkins_home:/var/jenkins_home
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #   restart: always
+  jenkins:
+    build: 
+      context: .
+      dockerfile: jenkins/Dockerfile
+    container_name: planex-jenkins
+    ports:
+      - "8080:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
 
 
 volumes:
