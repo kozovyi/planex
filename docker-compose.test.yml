@@ -1,11 +1,17 @@
-version: "3.9"
-
 services:
+  test-runner:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    depends_on:
+      - db-postgres
+    entrypoint: >
+      sh -c "pytest backend/tests || exit 1"
+    restart: "no"
+
   db-postgres:
     image: postgres
     container_name: planex-db-postgres
-    restart: always
-    shm_size: 1024mb
     environment:
       POSTGRES_PASSWORD: ${APP_CONFIG__DB__PASS}
       POSTGRES_USER: ${APP_CONFIG__DB__USER}
@@ -14,17 +20,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
-
-  app-backend:
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
-    container_name: planex-app
-    ports: 
-      - "8000:8000"
-    command: >
-      sh -c "python3 run.py"
+    shm_size: 1024mb
 
 volumes:
   postgres_data:
