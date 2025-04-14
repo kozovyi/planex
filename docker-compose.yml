@@ -24,8 +24,16 @@ services:
     ports: 
       - "8000:8000"
     command: >
-      sh -c "python3 run.py"  
-
+      sh -c "python3 run.py"
+        
+  test-runner:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    depends_on:
+      - db-postgres
+    command: >
+      sh -c "pytest backend/tests/test_main.py"
 
 volumes:
   postgres_data:
