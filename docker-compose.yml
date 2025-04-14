@@ -22,7 +22,7 @@ services:
     depends_on:
       - db-postgres
     entrypoint: >
-      sh -c "pytest backend/tests || exit 1"
+      sh -c "pytest -v tests/test_main.py || exit 1"
 
     restart: "no"
 
