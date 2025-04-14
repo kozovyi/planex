@@ -32,8 +32,6 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     container_name: planex-app
-    depends_on:
-      - test-runner  
     ports: 
       - "8000:8000"
     command: >
