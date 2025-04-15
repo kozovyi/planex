@@ -10,3 +10,4 @@ RUN apt-get install -y docker.io
 RUN usermod -a -G docker jenkins
 USER jenkins
 
+
