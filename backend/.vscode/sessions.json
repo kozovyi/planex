@@ -24,6 +24,15 @@
                 "commands": [
                     ".venv/Scripts/activate; cd ../; clear;"
                 ]
+            },
+            {
+                "name": "front",
+                "autoExecuteCommands": true,
+                "icon": "dashboard",
+                "color": "terminal.ansiBrightCyan",
+                "commands": [
+                    "cd ../frontend; cls; npm run dev"
+                ]
             }
         ]
     }

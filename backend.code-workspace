@@ -5,6 +5,10 @@
 			"path": "backend"
 		},
 		{
+			"name": "frontend",
+			"path": "frontend"
+		},
+		{
 			"name": "PlaneX",
 			"path": "."
 		}
