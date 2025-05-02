@@ -1,0 +1,69 @@
+.add-task-form {
+    padding: 1rem;
+}
+
+.add-task-form input[name='title'] {
+    padding: .35rem;
+}
+
+.add-task-form > label {
+    padding: 3px;
+}
+
+.add-task-form textarea[name='desc'] {
+    min-height: 55px;
+    max-height: 130px;
+    padding: .35rem;
+    height: 55px;
+}
+
+.add-task-form > label,
+.add-task-form > label > input,
+.add-task-form > label > textarea {
+    display: block;
+    margin: .1rem 0 .5rem 0;
+}
+
+.add-task-form-btns {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    bottom: .9rem;
+    width: -webkit-fill-available;
+    background: #fff;
+}
+
+body[class='dark-theme'] .add-task-form-btns {
+    background: #111;
+}
+
+.add-task-form button {
+    padding: .5rem 1rem;
+}
+
+.add-task-form-btns .submit-btn {
+    margin-right: .5rem;
+    border: 1px solid lightgray;
+}
+
+.add-task-form-btns .reset-btn {
+    color: #111;
+    border: 1px solid lightgray;
+}
+
+.add-task-form-btns .submit-btn:hover,
+.add-task-form-btns .reset-btn:hover {
+    background: rgb(239, 239, 239);
+}
+
+.add-task-form input[type="radio"] {
+    margin-right: .3rem;
+}
+
+.add-task-form input[type="text"],
+.add-task-form textarea {
+    border: 1px solid rgb(179, 178, 178);
+    border-radius: .2rem;
+    padding: 0.5rem
+}

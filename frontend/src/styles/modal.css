@@ -1,0 +1,147 @@
+.modal-wrapper {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    background: rgba(179, 188, 197, 0.35);
+    opacity: 1;
+}
+
+.modal .close-modal-btn {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    top: .75rem;
+    right: 1rem;
+    color: #111;
+    font-weight: 800;
+    border: none;
+    background: inherit;
+    background: transparent;
+}
+
+.close-modal-btn:hover,
+.close-modal-btn:focus {
+    background: rgb(238, 238, 238);
+}
+
+.modal button:hover {
+    cursor: pointer;
+}
+
+.modal {
+    --w: 85;
+    display: grid;
+    grid-template-rows: repeat(auto-fill, minmax(1rem, 2rem));
+    position: fixed;
+    border: 1px solid lightgray;
+    width: calc(var(--w) * 1vmin);
+    height: -webkit-fill-available;
+    max-height: 600px;
+    background: #fff;
+    border-radius: .5rem;
+    padding: 0 0 1rem 0;
+    margin: 1rem auto;
+    gap: 1px;
+}
+
+.modal-header {
+    width: 100%;
+    font-size: 1.5rem;
+    grid-row: 1 / 3;
+    grid-column: 1 / 15;
+    padding: 1rem 0;
+    display: block;
+    background: inherit;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    grid-column: 1 / 15;
+    grid-row: 1 / 3;
+    padding: 1rem;
+    font-size: 2rem;
+    margin: 1rem 0px;
+    line-height: normal;
+    font-weight: 700;
+    color: #212121;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+}
+
+.modal-content {
+    width: 100%;
+    overflow-y: auto;
+    height: 100%;
+    grid-row: 3 / 17;
+    grid-column: 1 / 15;
+    padding-bottom: 2rem;
+}
+
+.modal-footer {
+    padding: 0 1rem;
+    grid-row: 18 / 20;
+    grid-column: 1 / 15;
+}
+
+.modal input[type="text"],
+.modal textarea {
+    width: 100%;
+}
+
+.modal textarea {
+    resize: vertical;
+}
+input[type="radio"] + label {
+    font-size: 15px;
+}
+
+select.light-control-btn {
+    border-radius: 0.25rem;
+    font-size: 14px;
+}
+
+body[class='dark-theme'] .modal {
+    background: #111;
+    color: #eee;
+    border-color: #333;
+}
+
+body[class='dark-theme'] .modal-title {
+    color: #eee;
+}
+
+body[class='dark-theme'] .modal input[type='text'],
+body[class='dark-theme'] .modal textarea {
+    background: #171717;
+    border-color: #333;
+    color: #eee;
+}
+
+body[class='dark-theme'] .close-modal-btn {
+    color: #eee;
+}
+
+body[class='dark-theme'] .close-modal-btn:hover {
+    background: #222;
+}
+
+body[class='dark-theme'] .add-task-form-btns button {
+    background: #222;
+    color: #eee;
+    border-color: #333;
+}
+
+body[class='dark-theme'] .add-task-form-btns button:hover {
+    background: #333;
+}
