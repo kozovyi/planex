@@ -66,7 +66,7 @@ class PermissionStatus(Enum):
 
 
 class TaskStatus(Enum):
-    planned = "planned"
-    in_progress = "in_progress"
-    finished = "finished"
-    overdue = "overdue"
+    todo = "Todo"
+    in_progress = "In Progress"
+    in_review = "In Review"
+    complated = "Completed"

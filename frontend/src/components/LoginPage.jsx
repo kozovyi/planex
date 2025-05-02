@@ -30,19 +30,6 @@ const LoginPage = () => {
       document.cookie = `access_token=${response.data.access_token}; path=/; max-age=36000; secure`;
       
 
-      // axios.get("http://127.0.0.1:8000/api/api_v1/user/me", {
-      //   headers: {
-      //     "Authorization": `Bearer ${token}`
-      //   }
-      // })
-      // .then(response => {
-      //   console.log("Користувач:", response.data);
-      // })
-      // .catch(error => {
-      //   console.error("Помилка авторизації:", error);
-      // });
-
-
       navigate('/');
       // localStorage.setItem("token", response.data.access_token);
     } catch (error) {

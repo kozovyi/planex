@@ -134,7 +134,7 @@ async def test_create_task():
             "title": "Test Task",
             "description": "This is a test task.",
             "assigned_user_id": str(uuid4()),
-            "status": "planned",
+            "status": "Todo",
             "tags": "test, example",
             "deadline": (datetime.utcnow() + timedelta(days=1)).isoformat(),
             "positional_num": 1
@@ -172,7 +172,7 @@ async def test_get_task():
             "title": "Test Task",
             "description": "This is a test task.",
             "assigned_user_id": str(uuid4()),
-            "status": "planned",
+            "status": "Todo",
             "tags": "test, example",
             "deadline": (datetime.utcnow() + timedelta(days=1)).isoformat(),
             "positional_num": 1

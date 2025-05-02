@@ -37,6 +37,15 @@ class TaskRepo:
         return res
 
     @staticmethod
+    async def get_tasks_by_board_id(board_id: UUID, session: AsyncSession) -> list[Tasks]:
+        try:
+            query = select(Tasks).where(Tasks.board_id == board_id)
+            response = await session.execute(query)
+            return list(response.scalars().all())
+        except SQLAlchemyError:
+            raise bad_filter_exc
+        
+    @staticmethod
     async def add_task(
         user_id: UUID,
         board_id: UUID,

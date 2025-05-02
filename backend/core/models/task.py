@@ -26,7 +26,7 @@ class Tasks(Base):
     description: Mapped[str] = mapped_column(String(400))
 
     status: Mapped[TaskStatus] = mapped_column(
-        default=TaskStatus.in_progress, nullable=False
+        default=TaskStatus.todo, nullable=False
     )
     tags: Mapped[str] = mapped_column(String(64), nullable=True)
     deadline: Mapped[datetime.datetime] = mapped_column(nullable=True)

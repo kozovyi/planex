@@ -50,7 +50,7 @@ export default function Column({ column }) {
   }), [currentTask]);
 
   const themes = {
-    background: theme === 'dark' ? '#161616' : '#eee',
+    background: theme === 'dark' ? '#161616' : '#252525',
   };
 
   return (

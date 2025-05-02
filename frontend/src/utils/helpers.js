@@ -37,3 +37,6 @@ export function getCookie(cname) {
 export function getAccessToken(){
   return getCookie("access_token")
 }
+export function getActiveBoardId(){
+  return getCookie("active_board")
+}

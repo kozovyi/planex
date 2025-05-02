@@ -10,11 +10,6 @@ from api.api_v1.dependencies.user import current_user
 router = APIRouter()
 
 
-@router.get("/{task_id}")
-async def get_task(task_id: UUID, session: AsyncSession = Depends(async_db_helper.session_getter)):
-    return await TaskService.get_task(task_id, session)
-
-
 @router.post("/")
 async def add_task(
     board_id: UUID,
@@ -26,6 +21,18 @@ async def add_task(
     await TaskService.add_task(user_id, board_id, task_data, session)
     return {"message": "Task created successfully"}
 
+@router.get("/tasks-by-board")
+async def tasks_by_board(
+        board_id: UUID,
+        current_user: UserRead = Depends(current_user),
+        session: AsyncSession = Depends(async_db_helper.session_getter)
+    ):
+    return await TaskService.get_tasks_by_board_id(board_id, session)
+
+
+@router.get("/{task_id}")
+async def get_task(task_id: UUID, session: AsyncSession = Depends(async_db_helper.session_getter)):
+    return await TaskService.get_task(task_id, session)
 
 @router.put("/{task_id}")
 async def update_task(
