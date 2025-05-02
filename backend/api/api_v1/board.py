@@ -13,9 +13,14 @@ from api.api_v1.dependencies.user import current_user
 router = APIRouter()
 
 
-@router.get("/{board_id}")
-async def get_board(board_id: UUID, session: AsyncSession = Depends(async_db_helper.session_getter)):
-    return await BoardService.get_board(board_id, session)
+
+@router.get("/get-all")
+async def get_boards_by_user_id(
+    user: UserRead = Depends(current_user),
+    session: AsyncSession = Depends(async_db_helper.session_getter),
+):
+    return await BoardService.get_boards_by_user_id(user.id, session)
+
 
 @router.post("/")
 async def add_board(
@@ -27,6 +32,10 @@ async def add_board(
     await BoardService.add_board(user_id, board_data, session)
     return {"message": "Board created successfully"}
     
+    
+@router.get("/{board_id}")
+async def get_board(board_id: UUID, session: AsyncSession = Depends(async_db_helper.session_getter)):
+    return await BoardService.get_board(board_id, session)
 
 @router.put("/{board_id}")
 async def update_board(

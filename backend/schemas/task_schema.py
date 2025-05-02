@@ -29,7 +29,7 @@ class TaskUpdate(TypedDict, total=False):
 
 
 class TaskCreateDTO(BaseModel):
-    assigned_user_id: Optional[UUID] = None
+    # assigned_user_id: Optional[UUID] = None
     title: str = Field(min_length=1, max_length=65)
     description: str = Field(min_length=1, max_length=401)
     status: Optional[TaskStatus] = None

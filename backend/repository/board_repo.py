@@ -2,6 +2,7 @@ from sqlalchemy import select, insert, update, and_, func, delete
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID, uuid1
+from typing import Optional
 
 
 from core.config import settings
@@ -22,14 +23,23 @@ class BoardRepo:
         return board
 
     @staticmethod
-    async def get_boards_by_filter(filter, session: AsyncSession) -> list[Boards]:
+    async def get_boards_by_filter(
+        session: AsyncSession,
+        owner_id: Optional[UUID] = None,
+    ) -> list[Boards]:
         try:
-            query = select(Boards).where(filter)
-            response = await session.execute(query)
-            res = list(response.scalars().all())
+            filters = []
+            if owner_id is not None:
+                filters.append(Boards.user_id == owner_id)
+
+            query = select(Boards)
+            if filters:
+                query = query.where(*filters)
+
+            result = await session.execute(query)
+            return list(result.scalars().all())
         except SQLAlchemyError:
             raise bad_filter_exc
-        return res
 
     @staticmethod
     async def add_board(

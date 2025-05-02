@@ -7,6 +7,7 @@ import SaveFile from "./SaveFile";
 import GitHubIcon from "./icons/GithubIcon";
 import SortActions from "./SortActions";
 import ThemeSwitcher from "./ThemeSwitcher";
+import BoardList from "./BoardList";
 
 export default function Header() {
   const taskBoardState = useAppSelector(state => state.taskBoard);
@@ -21,8 +22,10 @@ export default function Header() {
       <img src="/logo.png" alt="Logo" className="logo" />
           <Search />
           <SortActions />
+          <BoardList />
         </div>
         <div style={{ display: 'flex', gap: '.5rem' }}>
+          
           <button
             title="Add Task"
             onClick={() => {
@@ -32,13 +35,12 @@ export default function Header() {
             >
             New Task <span className="plus-sign">+</span>
           </button>
+
           <button
             title="Add Board"
             onClick={() => {
+              dispatch(saveIsAddingNewBoard(true));
               
-              // ДОПИСАТИ Логіку додавання нового board
-
-              console.log("Add Board clicked");
             }}
             className="add-board-btn btn"
           >
@@ -46,6 +48,7 @@ export default function Header() {
           </button>
           
           <SaveFile />
+
           <button
             title="Clear task board"
             className="clear-board-btn light-control-btn"
