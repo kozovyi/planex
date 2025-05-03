@@ -7,6 +7,7 @@ import { Routes, Route } from 'react-router-dom'
 import { useAppDispatch } from './redux/app/hooks'
 import { getStoredTaskBoard } from './utils/localStorage'
 import { saveBoard } from './redux/features/task-board-slice'
+import { BoardProvider } from "./components/BoardContext";
 
 export default function App() {
   const dispatch = useAppDispatch();
@@ -17,6 +18,8 @@ export default function App() {
   }
 
   return (
+    <BoardProvider>
+
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/" element={
@@ -27,5 +30,6 @@ export default function App() {
         </div>
       } />
     </Routes>
+      </BoardProvider>
   );
 }

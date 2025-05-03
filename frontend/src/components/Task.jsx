@@ -1,25 +1,24 @@
 import { useDrag } from 'react-dnd';
 import { ITEM_TYPE } from '../utils/constants';
-import { useAppDispatch, useAppSelector } from '../redux/app/hooks';
-import { saveCurrentDraggedTask, saveIsExpandingTask, taskBoardSlice } from '../redux/features/task-board-slice';
 import { isValidArray } from '../utils/helpers';
 import '../styles/task.css';
 
-export default function Task({ task, children }) {
-  const dispatch = useAppDispatch();
+export default function Task({ task, onSelect, children }) {
   const [{ isDragging }, dragRef] = useDrag(() => ({
     type: ITEM_TYPE.TASK,
     item: { task },
     collect: (monitor) => ({
       isDragging: Boolean(monitor.isDragging()),
     }),
-  }), []);
+  }), [task]);
 
   if (!task) {
     return '';
   }
 
-  const { title, desc, labels } = task;
+  // Adapt to API response structure
+  const { title, description: desc, tags } = task;
+  const labels = typeof tags === 'string' ? tags.trim().split(/\s+/) : [];
 
   return (
     <div
@@ -32,16 +31,14 @@ export default function Task({ task, children }) {
       }}
       onKeyUp={(e) => {
         if (e.key === 'Enter') {
-          dispatch(saveIsExpandingTask(true));
-          dispatch(saveCurrentDraggedTask(task));
+          onSelect(task);
         }
       }}
       onClick={() => {
-        dispatch(saveIsExpandingTask(true));
-        dispatch(saveCurrentDraggedTask(task));
+        onSelect(task);
       }}
       onDragStart={() => {
-        dispatch(saveCurrentDraggedTask(task));
+        onSelect(task);
       }}
     >
       <Title title={title} controls={children} />

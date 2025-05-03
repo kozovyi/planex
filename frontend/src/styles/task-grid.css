@@ -12,7 +12,16 @@
 .task-list > li {
     width: 100%;
 }
-
+.task-list {
+    overflow: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  }
+  
+  .task-list::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  
 .task-board .board-column {
     min-width: 15rem;
     width: 100%;

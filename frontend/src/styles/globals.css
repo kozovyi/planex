@@ -279,8 +279,9 @@ body[class='dark-theme'] .task-list {
     }
     
     body .task__labels li {
-        background: #252525;
-        color: #eee;
+        background: #5b5e91;
+        color: #ffffff;
+        font-weight: 400;
     }
     
     body .task-card-actions .light-control-btn {

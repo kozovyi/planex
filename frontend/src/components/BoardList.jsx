@@ -41,7 +41,6 @@ export default function BoardList({ onBoardSelect }) {
           setSelectedBoardId("");
           onBoardSelect("");
         }
-
       } catch (error) {
         console.error("Error fetching boards:", error);
       }
@@ -56,6 +55,9 @@ export default function BoardList({ onBoardSelect }) {
     localStorage.setItem("active_board", boardId);
     setSelectedBoardId(boardId);
     onBoardSelect(boardId);
+    
+    // Додаємо подію для оновлення інших вкладок
+    window.dispatchEvent(new Event('storage'));
   };
 
   return (
