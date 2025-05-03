@@ -10,7 +10,7 @@ export default function AddTaskForm() {
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
   const [labels, setLabels] = useState('');
-  const [status, setStatus] = useState('todo');
+  const [status, setStatus] = useState('Todo');
   const [success, setSuccess] = useState(false);
   const [boardId, setBoardId] = useState('');
 
@@ -28,7 +28,7 @@ export default function AddTaskForm() {
     setTitle('');
     setDesc('');
     setLabels('');
-    setStatus('todo');
+    setStatus('Todo');
   }
 
   async function handleSubmit(e) {
@@ -42,16 +42,16 @@ export default function AddTaskForm() {
       return;
     }
 
-    const labelsArray = labels
-      .split(',')
-      .map((l) => l.trim())
-      .filter((l) => l.length > 0);
+    const labelsArray = labels;
 
     const payload = {
       title: title.trim(),
       description: desc.trim(),
-      positional_num: 0
+      positional_num: 0,
+      status,
+      tags: labelsArray
     };
+    console.log(payload)
 
     try {
       const boardId = localStorage.getItem("active_board");
@@ -72,6 +72,7 @@ export default function AddTaskForm() {
       console.error('Error creating task:', error);
       setHasError(true);
     }
+    window.location.reload();
   }
 
   return (
@@ -114,21 +115,49 @@ export default function AddTaskForm() {
         </label>
         <label>Status</label>
         <div>
-          <input type="radio" value="todo" checked={status === 'todo'} name="status" id="todo-status" onChange={(e) => setStatus(e.target.value)} />
-          <label htmlFor="todo-status">Todo</label>
-        </div>
-        <div>
-          <input type="radio" value="in-progress" checked={status === 'in-progress'} name="status" id="in-progress-status" onChange={(e) => setStatus(e.target.value)} />
-          <label htmlFor="in-progress-status">In Progress</label>
-        </div>
-        <div>
-          <input type="radio" value="in-review" checked={status === 'in-review'} name="status" id="in-review-status" onChange={(e) => setStatus(e.target.value)} />
-          <label htmlFor="in-review-status">In Review</label>
-        </div>
-        <div>
-          <input type="radio" value="completed" checked={status === 'completed'} name="status" id="completed-status" onChange={(e) => setStatus(e.target.value)} />
-          <label htmlFor="completed-status">Completed</label>
-        </div>
+  <input
+    type="radio"
+    value="Todo"
+    checked={status === 'Todo'}
+    name="status"
+    id="todo-status"
+    onChange={(e) => setStatus(e.target.value)}
+  />
+  <label htmlFor="todo-status">Todo</label>
+</div>
+<div>
+  <input
+    type="radio"
+    value="In Progress"
+    checked={status === 'In Progress'}
+    name="status"
+    id="in-progress-status"
+    onChange={(e) => setStatus(e.target.value)}
+  />
+  <label htmlFor="in-progress-status">In Progress</label>
+</div>
+<div>
+  <input
+    type="radio"
+    value="In Review"
+    checked={status === 'In Review'}
+    name="status"
+    id="in-review-status"
+    onChange={(e) => setStatus(e.target.value)}
+  />
+  <label htmlFor="in-review-status">In Review</label>
+</div>
+<div>
+  <input
+    type="radio"
+    value="Completed"
+    checked={status === 'Completed'}
+    name="status"
+    id="completed-status"
+    onChange={(e) => setStatus(e.target.value)}
+  />
+  <label htmlFor="completed-status">Completed</label>
+</div>
         <div className="add-task-form-btns">
           <button className="submit-btn" type="submit">
             Create Task
