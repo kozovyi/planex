@@ -99,7 +99,7 @@
 .task-card-actions button.light-control-btn:hover,
 .task-card-actions select.light-control-btn:hover  {
     cursor: pointer;
-    background: rgb(239, 239, 239);
+    background: rgb(20, 20, 20);
     /* background: red !important; */
 }
 

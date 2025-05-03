@@ -146,7 +146,7 @@ footer {
 }
 
 .light-control-btn:hover {
-    background: rgb(240, 240, 240);
+    background: rgb(43, 43, 43);
 }
 
 .theme-icon {
@@ -289,7 +289,6 @@ body[class='dark-theme'] .task-list {
         border: 1px solid #333;
         color: #eee;
     }
-
     body[class='light-theme'] {
         background: #fff;
         color: #111;
@@ -363,3 +362,9 @@ body[class='dark-theme'] .task-list {
 .add-task-form textarea, input{
     color: #fff;
 } 
+
+body .task-card-actions .light-control-btn:hover{
+    background-color: #1a1a1a;
+    border: 1px solid #202020;
+    color: #ffffff;
+}
