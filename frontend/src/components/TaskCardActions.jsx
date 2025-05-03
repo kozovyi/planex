@@ -4,10 +4,11 @@ import AddTaskForm from "./AddTaskForm";
 import Modal from "./Modal";
 import { getAccessToken } from "../utils/helpers";
 
-export default function TaskCardActions({ task, onClose }) {
+
+
+export default function TaskCardActions({ task, onClose, refreshTasks }) {
   const [isEditing, setIsEditing] = useState(false);
   
-  // Функція для перетворення статусу у правильний формат API
   const formatStatusForAPI = (status) => {
     const statusMap = {
       'todo': 'Todo',
@@ -18,12 +19,11 @@ export default function TaskCardActions({ task, onClose }) {
       'completed': 'Completed'
     };
     
-    // Знаходимо відповідний статус в мапі
     const formattedStatus = statusMap[status.toLowerCase()];
     
     if (!formattedStatus) {
       console.error('Invalid status:', status);
-      return status; // Повертаємо оригінальний статус, якщо не знайдено в мапі
+      return status; 
     }
     
     return formattedStatus;
@@ -33,7 +33,7 @@ export default function TaskCardActions({ task, onClose }) {
     try {
       const token = getAccessToken();
       const formattedStatus = formatStatusForAPI(newStatus);
-
+  
       const updatedData = {
         title: task.title,
         description: task.description,
@@ -41,13 +41,13 @@ export default function TaskCardActions({ task, onClose }) {
           ? task.tags 
           : (Array.isArray(task.tags) 
               ? task.tags.join(" ") 
-              : ""),
+              : null),
         positional_num: task.positional_num,
         status: formattedStatus
       };
-
+  
       console.log("Sending task update:", updatedData);
-
+  
       const response = await fetch(
         `http://127.0.0.1:8000/api/api_v1/task/${taskId}`,
         {
@@ -60,22 +60,27 @@ export default function TaskCardActions({ task, onClose }) {
           body: JSON.stringify(updatedData)
         }
       );
-
+  
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         console.error('API Error details:', errorData);
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
+  
       const updatedTask = await response.json();
       console.log('Task status updated:', updatedTask);
+  
+      if (refreshTasks) refreshTasks();
+  
       onClose();
+      window.location.reload();
       return updatedTask;
     } catch (error) {
       console.error("Error updating task status:", error);
       return null;
     }
   };
+  
 
   const deleteTask = async (taskId) => {
     try {
@@ -96,6 +101,9 @@ export default function TaskCardActions({ task, onClose }) {
       }
       
       console.log('Task deleted successfully');
+      
+      if (refreshTasks) refreshTasks();
+      
       onClose();
       return true;
     } catch (error) {
@@ -146,6 +154,7 @@ export default function TaskCardActions({ task, onClose }) {
           isEditing={true} 
           onSave={() => {
             setIsEditing(false);
+            if (refreshTasks) refreshTasks();
             onClose();
           }} 
         />}

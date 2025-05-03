@@ -2,17 +2,24 @@ import '../styles/task-list.css';
 import PropTypes from 'prop-types';
 import Task from './Task';
 import Modal from './Modal';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Labels } from './Task';
 import TaskCardActions from './TaskCardActions';
 
-export default function Tasks({ tasks, columnName, setCurrentTask }) {
+export default function Tasks({ tasks, columnName, setCurrentTask, fetchTasks }) {
   const [isTaskExpanded, setIsTaskExpanded] = useState(false);
   const [currentTaskDetails, setCurrentTaskDetails] = useState(null);
+
+  const refreshTasks = useCallback(() => {
+    if (fetchTasks) {
+      fetchTasks();
+    }
+  }, [fetchTasks]);
 
   if (!Array.isArray(tasks)) {
     return '';
   }
+  
   const handleTaskSelect = (task) => {
     setCurrentTaskDetails(task);
     setCurrentTask(task);
@@ -33,6 +40,7 @@ export default function Tasks({ tasks, columnName, setCurrentTask }) {
                 footer={<TaskCardActions 
                   task={currentTaskDetails}
                   onClose={() => setIsTaskExpanded(false)}
+                  refreshTasks={refreshTasks}
                 />}
                 isOpen={isTaskExpanded}
                 onClose={() => {
@@ -85,7 +93,8 @@ function DisplayTask({ task }) {
 Tasks.propTypes = {
   tasks: PropTypes.array,
   columnName: PropTypes.string,
-  setCurrentTask: PropTypes.func
+  setCurrentTask: PropTypes.func,
+  fetchTasks: PropTypes.func
 };
 
 DisplayTask.propTypes = {

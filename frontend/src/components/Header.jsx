@@ -4,7 +4,6 @@ import { useAppSelector, useAppDispatch } from "../redux/app/hooks";
 import AddTaskForm from "./AddTaskForm";
 import Modal from "./Modal";
 import Search from "./Search";
-import SaveFile from "./SaveFile";
 import GitHubIcon from "./icons/GithubIcon";
 import SortActions from "./SortActions";
 import ThemeSwitcher from "./ThemeSwitcher";
@@ -46,18 +45,6 @@ export default function Header() {
             Add Board <span className="plus-sign">+</span>
           </button>
 
-          <SaveFile />
-
-          <button
-            title="Clear task board"
-            className="clear-board-btn light-control-btn"
-            onClick={() => {
-              dispatch(clearBoard());
-              dispatch(clearLocalStorage());
-            }}
-          >
-            Clear
-          </button>
         </div>
 
         <Modal

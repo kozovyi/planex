@@ -4,10 +4,10 @@ import '../styles/task-list.css';
 import '../styles/task-grid.css';
 import { useState, useEffect } from 'react';
 
-export default function TaskBoard() {
+export default function TaskBoard() 
+{
   const [activeBoardId, setActiveBoardId] = useState(localStorage.getItem("active_board"));
 
-  // Слухаємо зміни в localStorage
   useEffect(() => {
     const handleStorageChange = () => {
       setActiveBoardId(localStorage.getItem("active_board"));
