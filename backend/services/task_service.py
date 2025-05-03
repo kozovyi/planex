@@ -18,6 +18,10 @@ class TaskService:
         return await TaskRepo.get_tasks_by_board_id(board_id, session)
     
     @staticmethod
+    async def get_tasks_by_board_title(title_filter, board_id: UUID, session: AsyncSession) -> list[Tasks]:
+        return await TaskRepo.get_tasks_by_board_title(title_filter, board_id, session)
+    
+    @staticmethod
     async def add_task(user_id: UUID, board_id: UUID, task_data: TaskCreateDTO, session: AsyncSession) -> None:
         task = TaskCreate(**task_data.model_dump(exclude_none=True))
         await TaskRepo.add_task(user_id, board_id, task, session)

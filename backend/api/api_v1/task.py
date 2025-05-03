@@ -29,6 +29,14 @@ async def tasks_by_board(
     ):
     return await TaskService.get_tasks_by_board_id(board_id, session)
 
+@router.get("/tasks-by-board-title")
+async def tasks_by_board_title(
+        title_filter: str,
+        board_id: UUID,
+        current_user: UserRead = Depends(current_user),
+        session: AsyncSession = Depends(async_db_helper.session_getter)
+    ):
+    return await TaskService.get_tasks_by_board_title(title_filter, board_id, session)
 
 @router.get("/{task_id}")
 async def get_task(task_id: UUID, session: AsyncSession = Depends(async_db_helper.session_getter)):

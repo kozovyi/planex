@@ -61,6 +61,20 @@ body[class='dark-theme'] .add-task-form-btns {
 
 }
 
+
+.search-btn {
+    color: #ffffff;
+    border: 1px solid rgb(48, 48, 48);
+    height: 34px;
+    margin-left: 10px;
+}
+.search-btn img{
+    height: 80%;
+}
+
+
+
+
 .add-task-form input[type="radio"] {
     margin-right: .3rem;
 }

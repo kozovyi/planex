@@ -44,6 +44,18 @@ class TaskRepo:
             return list(response.scalars().all())
         except SQLAlchemyError:
             raise bad_filter_exc
+    
+    @staticmethod
+    async def get_tasks_by_board_title(title_filter: str, board_id: UUID, session: AsyncSession) -> list[Tasks]:
+        try:
+            query = select(Tasks).where(
+                Tasks.board_id == board_id,
+                Tasks.title.ilike(f"%{title_filter}%") 
+            )
+            response = await session.execute(query)
+            return list(response.scalars().all())
+        except SQLAlchemyError:
+            raise Exception("Error fetching tasks by title filter")
         
     @staticmethod
     async def add_task(
