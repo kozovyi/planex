@@ -5,19 +5,18 @@ import Tasks from './Tasks';
 import { getAccessToken } from "../utils/helpers";
 
 export default function Column({ column, activeBoardId }) {
-  const columnName = column.label.toLowerCase();
   const [columnTasks, setColumnTasks] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
   const [currentTask, setCurrentTask] = useState(null);
-  const [theme] = useState('light'); // Додано theme, яке використовується нижче
-  const [searchTerm] = useState(''); // Додано searchTerm, яке використовується нижче
-  const [sortBy] = useState('created-at'); // Додано sortBy, яке використовується нижче
+  const [theme] = useState('light');
+  const [searchTerm] = useState('');
+  const [sortBy] = useState('created-at');
 
   // Fetch tasks from API
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        if (!activeBoardId) return;  // Не робимо запит, якщо немає активного борду
+        if (!activeBoardId) return;
         
         const token = getAccessToken();
         const response = await fetch(
@@ -43,12 +42,12 @@ export default function Column({ column, activeBoardId }) {
     };
 
     fetchTasks();
-  }, [activeBoardId]);  // Залежність тільки від activeBoardId
+  }, [activeBoardId]);
 
   // Filter and sort tasks for this column
   useEffect(() => {
     const tasksForColumn = allTasks.filter(task => 
-      task.status.toLowerCase() === columnName.toLowerCase()
+      task.status === column.label  // Точне співпадіння зі статусами API
     );
     
     const filtered = tasksForColumn.filter(task => 
@@ -68,12 +67,36 @@ export default function Column({ column, activeBoardId }) {
     
     const sorted = filtered.sort(sort);
     setColumnTasks(sorted);
-  }, [allTasks, columnName, searchTerm, sortBy]);
+  }, [allTasks, column.label, searchTerm, sortBy]);
 
   // Update task status when dropped to a different column
-  const updateTaskStatus = async (taskId, newStatus) => {
+  const updateTaskStatus = async (taskId, newStatus, originalTask) => {
     try {
       const token = getAccessToken();
+      const formatStatusForAPI = (status) => {
+        console.log(status)
+        console.log("---------")
+        const statusMap = {
+          'todo': 'Todo',
+          'in-progress': 'In Progress',
+          'in_progress': 'In Progress',
+          'in-review': 'In Review',
+          'in_review': 'In Review',
+          'completed': 'Completed'
+        };
+        if (statusMap[status.toLowerCase()]) {
+          return statusMap[status.toLowerCase()];
+        }
+        return status
+          .replace(/[_-]/g, ' ')
+          .split(' ')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+          .join(' ');
+      };
+  
+      const formattedStatus = formatStatusForAPI(newStatus);
+      console.log("---------")
+      console.log(formattedStatus)
       const response = await fetch(
         `http://127.0.0.1:8000/api/api_v1/task/${taskId}`,
         {
@@ -84,44 +107,43 @@ export default function Column({ column, activeBoardId }) {
             'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({
-            status: newStatus
+            ...originalTask,
+            status: formattedStatus,
           })
         }
       );
-      
+  
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      
+  
       const updatedTask = await response.json();
-      console.log('Task updated:', updatedTask);
-      
-      // Update local state
-      setAllTasks(prevTasks => 
-        prevTasks.map(task => 
-          task.id === taskId ? { ...task, status: newStatus } : task
+  
+      setAllTasks(prevTasks =>
+        prevTasks.map(task =>
+          task.id === taskId ? { ...task, status: formattedStatus } : task
         )
       );
-      
+  
       return updatedTask;
     } catch (error) {
       console.error("Error updating task status:", error);
       return null;
     }
   };
+  
 
   const [{ isOver }, dropRef] = useDrop(() => ({
     accept: ITEM_TYPE.TASK,
     drop: () => {
-      if (currentTask && currentTask.status !== columnName) {
-        const columnKey = columnName || 'todo';
-        updateTaskStatus(currentTask.id, columnKey);
+      if (currentTask && currentTask.status !== column.label) {
+        updateTaskStatus(currentTask.id, column.label, currentTask); // FIX
       }
     },
     collect: monitor => ({
       isOver: Boolean(monitor.isOver()),
     }),
-  }), [currentTask, columnName]);
+  }), [currentTask, column.label]);
 
   const themes = {
     background: theme === 'dark' ? '#161616' : '#252525',
