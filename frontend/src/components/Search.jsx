@@ -5,7 +5,7 @@ export default function Search() {
   const dispatch = useAppDispatch();
   // TODO: Add filter options, clear search button
   return (
-    <input
+    <input  
       className="search-bar"
       type="text"
       placeholder="Search items"

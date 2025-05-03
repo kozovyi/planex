@@ -20,7 +20,6 @@ export default function Header() {
         <div className="controls">
           <img src="/logo.png" alt="Logo" className="logo" />
           <Search />
-          <SortActions />
           <BoardList onBoardSelect={setSelectedBoardId} />
         </div>
 
