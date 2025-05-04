@@ -16,6 +16,7 @@ export default function Tasks({ tasks, columnName, setCurrentTask, fetchTasks })
     }
   }, [fetchTasks]);
 
+  // console.log(tasks)
   if (!Array.isArray(tasks)) {
     return '';
   }

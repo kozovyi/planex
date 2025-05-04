@@ -3,13 +3,30 @@ import Tasks from './Tasks';
 import { getAccessToken } from "../utils/helpers";
 import SortActions from './SortActions';
 
-export default function Column({ column, activeBoardId }) {   
+export default function Column({ column, activeBoardId, setDataFromSearch, checkDataFromSearch}) {   
   const [columnTasks, setColumnTasks] = useState([]);   
   const [allTasks, setAllTasks] = useState([]);   
   const [currentTask, setCurrentTask] = useState(null);   
   const [searchTerm] = useState('');   
   const [sortBy, setSortBy] = useState('created_at'); // Змінено дефіс на підкреслення
   
+  
+  useEffect(() => {
+    if (checkDataFromSearch === 1) {
+      const savedTasks = localStorage.getItem("myTasks");
+      if (savedTasks) {
+        try {
+          const parsedTasks = JSON.parse(savedTasks);
+          setAllTasks(parsedTasks);  // <- Замість fetch, оновлюємо allTasks вручну
+        } catch (error) {
+          console.error("Помилка парсингу збережених задач:", error);
+        }
+      }
+      setDataFromSearch(0);
+    }
+  }, [checkDataFromSearch]);
+
+
   const fetchTasks = useCallback(async () => {     
     try {       
       if (!activeBoardId) return;              
@@ -36,7 +53,7 @@ export default function Column({ column, activeBoardId }) {
       console.error("Error fetching tasks:", error);     
     }   
   }, [activeBoardId]);    
-  
+
   // Виклик fetchTasks при першому рендері   
   useEffect(() => {     
     fetchTasks();   
@@ -67,6 +84,7 @@ export default function Column({ column, activeBoardId }) {
     setColumnTasks(sorted);   
   }, [allTasks, column.label, searchTerm, sortBy]);    
   
+
   return (     
     <div className="board-column">       
       <div className="column-header">         
@@ -77,7 +95,7 @@ export default function Column({ column, activeBoardId }) {
         <div className="column-sort">
           <SortActions sortBy={sortBy} setSortBy={setSortBy} />
         </div>
-      </div>       
+      </div>
       <Tasks         
         tasks={columnTasks}         
         columnName={column.label}         

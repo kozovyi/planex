@@ -141,7 +141,6 @@ async def test_create_task():
         }
         response = await client.post(f"/api/api_v1/main/tasks/?board_id={board_id}", json=task_data, headers=headers)
 
-        # Логування відповіді для налагодження
         print(response.json())
 
         assert response.status_code == 200
@@ -198,4 +197,4 @@ async def test_get_boards_empty():
 
         response = await client.get("/api/api_v1/main/boards/", headers=headers)
         assert response.status_code == 200
-        assert response.json() == []  # Припускаємо, що список дошок порожній
+        assert response.json() == [] 

@@ -7,9 +7,10 @@ import Search from "./Search";
 import GitHubIcon from "./icons/GithubIcon";
 import SortActions from "./SortActions";
 import ThemeSwitcher from "./ThemeSwitcher";
+import CopyBoardIdButton from "./CopyBoardIdButton";
 import BoardList from "./BoardList";
 
-export default function Header() {
+export default function Header({ setDataFromSearch }) {
   const [selectedBoardId, setSelectedBoardId] = useState("");
   const taskBoardState = useAppSelector(state => state.taskBoard);
   const dispatch = useAppDispatch();
@@ -19,8 +20,10 @@ export default function Header() {
       <div className="header-inputs">
         <div className="controls">
           <img src="/logo.png" alt="Logo" className="logo" />
-          <Search />
+          <Search setDataFromSearch = {setDataFromSearch}/>
           <BoardList onBoardSelect={setSelectedBoardId} />
+
+          <CopyBoardIdButton/>
         </div>
 
         <div style={{ display: 'flex', gap: '.5rem' }}>

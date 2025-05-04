@@ -1,4 +1,5 @@
 import './styles/globals.css'
+import { useState, useEffect } from "react";
 import TaskBoard from './components/TaskBoard'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -12,10 +13,14 @@ import { BoardProvider } from "./components/BoardContext";
 export default function App() {
   const dispatch = useAppDispatch();
   const existingTasks = getStoredTaskBoard();
+  const [checkDataFromSearch, setDataFromSearch] = useState(0); 
+
+
 
   if (existingTasks) {
     dispatch(saveBoard(existingTasks));
   }
+
 
   return (
     <BoardProvider>
@@ -24,8 +29,8 @@ export default function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/" element={
         <div className="task-board-app">
-          <Header />
-          <TaskBoard />
+          <Header setDataFromSearch={setDataFromSearch}/>
+          <TaskBoard setDataFromSearch={setDataFromSearch} checkDataFromSearch={checkDataFromSearch} />
           <Footer />
         </div>
       } />

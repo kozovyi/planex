@@ -4,7 +4,11 @@ import '../styles/task-list.css';
 import '../styles/task-grid.css';
 import { useState, useEffect } from 'react';
 
-export default function TaskBoard() 
+
+
+
+
+export default function TaskBoard({setDataFromSearch, checkDataFromSearch}) 
 {
   const [activeBoardId, setActiveBoardId] = useState(localStorage.getItem("active_board"));
 
@@ -17,10 +21,13 @@ export default function TaskBoard()
     return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
+
   return (
     <section className="task-board">
       {GRID_LABELS.map((column, i) => (
         <Column
+          setDataFromSearch={setDataFromSearch}
+          checkDataFromSearch={checkDataFromSearch}
           key={i}
           column={column}
           activeBoardId={activeBoardId}  // Передаємо activeBoardId як пропс
