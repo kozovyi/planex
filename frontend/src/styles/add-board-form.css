@@ -1,0 +1,68 @@
+.add-board-form {
+    padding: 1rem;
+  }
+  
+  .add-board-form input[name='name'] {
+    padding: .35rem;
+  }
+  
+  .add-board-form > label {
+    padding: 3px;
+  }
+  
+  .add-board-form textarea[name='description'] {
+    min-height: 55px;
+    max-height: 130px;
+    padding: .35rem;
+    height: 55px;
+  }
+  
+  .add-board-form > label, 
+  .add-board-form > label > input, 
+  .add-board-form > label > textarea {
+    color: #ffffff;
+    display: block;
+    margin: .1rem 0 .5rem 0;
+  }
+  
+  .add-board-form-btns {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    bottom: .9rem;
+    width: -webkit-fill-available;
+    background: #0a0a0a;
+  }
+  
+  body[class='dark-theme'] .add-board-form-btns {
+    background: #0a0a0a;
+  }
+  
+  .add-board-form button {
+    padding: .5rem 1rem;
+    color: #ffffff;
+  }
+  
+  .add-board-form-btns .submit-btn {
+    margin-right: .5rem;
+    color: #ffffff;
+  }
+  
+  .add-board-form-btns {
+    color: #ffffff;
+  }
+  
+  .add-board-form-btns .submit-btn:hover,
+  .add-board-form-btns .reset-btn:hover {
+    background: rgb(51, 51, 51);
+    border: 1px solid rgb(48, 48, 48);
+  }
+  
+  .add-board-form input[type="text"],
+  .add-board-form textarea {
+    background: #111;
+    border: 1px solid rgb(48, 48, 48);
+    border-radius: .2rem;
+    padding: 0.5rem;
+  }

@@ -41,7 +41,6 @@ body[class='dark-theme'] .add-task-form-btns {
 .add-task-form button {
     padding: .5rem 1rem;
     color: #ffffff;
-
 }
 
 .add-task-form-btns .submit-btn {
@@ -72,6 +71,16 @@ body[class='dark-theme'] .add-task-form-btns {
     height: 80%;
 }
 
+.board-btn {
+    background: #1a6bdd;
+    width: 39px;
+    font-size: 27px;
+    text-align: center;
+    color: #ffffff;
+    border: 1px solid rgb(48, 48, 48);
+    height: 39px;
+    font-weight: 700;
+}
 
 
 

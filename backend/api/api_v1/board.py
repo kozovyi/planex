@@ -32,7 +32,17 @@ async def add_board(
     await BoardService.add_board(user_id, board_data, session)
     return {"message": "Board created successfully"}
     
+@router.post("/add-permission")
+async def add_board_permission(
+    board_id: UUID,
+    current_user: UserRead = Depends(current_user),
+    session: AsyncSession = Depends(async_db_helper.session_getter)
+):
+    user_id = current_user.id
+    await BoardService.add_board_permission(user_id, board_id, session)
+    return {"message": "Board permission added"}
     
+
 @router.get("/{board_id}")
 async def get_board(board_id: UUID, session: AsyncSession = Depends(async_db_helper.session_getter)):
     return await BoardService.get_board(board_id, session)

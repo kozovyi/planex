@@ -7,6 +7,9 @@ from core.database import async_db_helper
 from repository.board_repo import BoardRepo
 from schemas.board_schema import BoardCreate, BoardUpdate, BoardCreateDTO, BoardUpdateDTO
 from core.models.board import Boards
+from repository.permision_repo import PermissionRepo
+from schemas.permission_schema import PermissionCreate
+from core.models.base import PermissionStatus
 
 class BoardService:
 
@@ -16,12 +19,18 @@ class BoardService:
 
     @staticmethod
     async def get_boards_by_user_id(user_id: UUID, session: AsyncSession) -> list[Boards]:
-        return await BoardRepo.get_boards_by_filter(owner_id=user_id, session=session)
+        return await PermissionRepo.get_boards_by_user(user_id, session)
 
     @staticmethod
     async def add_board(user_id: UUID, board_data: BoardCreateDTO, session: AsyncSession) -> None:
         board = BoardCreate(**board_data.model_dump(exclude_none=True))
-        await BoardRepo.add_board(user_id, board, session)
+        created_board = await BoardRepo.add_board(user_id, board, session)
+        await PermissionRepo.add_permission(board_id=created_board.id, user_id=user_id, permission_data = {"permission_status": PermissionStatus.admin}, session=session)
+        await session.commit()
+
+    @staticmethod
+    async def add_board_permission(user_id: UUID, board_id: UUID, session: AsyncSession) -> None:
+        await PermissionRepo.add_permission(board_id=board_id, user_id=user_id, permission_data = {"permission_status": PermissionStatus.admin}, session=session)
         await session.commit()
 
     @staticmethod

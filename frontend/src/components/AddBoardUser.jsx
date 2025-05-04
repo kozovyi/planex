@@ -1,25 +1,29 @@
 import { useState } from 'react';
-import '../styles/add-board-form.css'; 
+import '../styles/add-board-user.css'; 
 import axios from 'axios';
 import { getAccessToken } from '../utils/helpers';
 import Alert from './Alert';
 
-export default function AddBoardForm() {
+export default function AddBoardUser() {
   const [hasError, setHasError] = useState(false);
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [boardId, setBoardId] = useState('');
   const [success, setSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('Error creating board');
+  const [errorMessage, setErrorMessage] = useState('Error adding permission');
 
   function resetFormState() {
-    setName('');
-    setDescription('');
+    setBoardId('');
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
     setHasError(false);
     setSuccess(false);
+
+    if (!boardId.trim()) {
+      setErrorMessage('Board ID is required');
+      setHasError(true);
+      return;
+    }
 
     const token = getAccessToken();
     if (!token) {
@@ -28,17 +32,10 @@ export default function AddBoardForm() {
       return;
     }
 
-    const payload = {
-      title: name.trim(),
-      description: description.trim()
-    };
-
-    console.log(payload)
-
     try {
-      const response = await axios.post(
-        'http://127.0.0.1:8000/api/api_v1/board/',
-        payload,
+        const response = await axios.post(
+        `http://127.0.0.1:8000/api/api_v1/board/add-permission?board_id=${boardId.trim()}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -53,17 +50,14 @@ export default function AddBoardForm() {
 
       resetFormState();
       setSuccess(true);
-      
-      // Reload the page to show the new board
       setTimeout(() => {
         window.location.reload();
       }, 500);
     } catch (error) {
-      console.error('Error creating board:', error);
-      setErrorMessage(error.response?.data?.detail || 'Error creating board');
+      console.error('Error adding board :', error);
+      setErrorMessage(error.response?.data?.detail || 'Error adding board');
       setHasError(true);
     }
-    
   }
 
   return (
@@ -78,36 +72,30 @@ export default function AddBoardForm() {
       {success && (
         <Alert
           show={success}
-          text="Board successfully created!"
+          text="Board successfully added!"
           onClick={() => setSuccess(false)}
         />
       )}
       <form
-        className="add-board-form"
+        className="add-board-user-form"
         method="post"
         onSubmit={handleSubmit}
-        name="add-board"
+        name="add-board-user"
       >
         <label>
-          Name <input 
-            type="text" 
-            name="name" 
-            value={name} 
-            onChange={(e) => setName(e.target.value)} 
-            required 
+          Board request link
+          <input
+            type="text"
+            name="boardId"
+            value={boardId}
+            onChange={(e) => setBoardId(e.target.value)}
+            placeholder="Enter request link"
+            required
           />
         </label>
-        <label>
-          Description <br />
-          <textarea 
-            name="description" 
-            value={description} 
-            onChange={(e) => setDescription(e.target.value)} 
-          />
-        </label>
-        <div className="add-board-form-btns">
+        <div className="add-board-user-form-btns">
           <button className="submit-btn" type="submit">
-            Create Board
+            Join
           </button>
           <button className="reset-btn" type="reset" onClick={resetFormState}>
             Reset
