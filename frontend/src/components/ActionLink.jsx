@@ -44,6 +44,7 @@ export default function ActionLink({ titleFilter, setDataFromSearch}) {
   };
 
   return (
+    <>
     <button
       className="search-btn"
       onClick={async (e) => {
@@ -53,5 +54,9 @@ export default function ActionLink({ titleFilter, setDataFromSearch}) {
     >
       {<img src="icons8-search-32.png" alt="Search" />}
     </button>
+    
+  
+    
+    </>
   );
 }

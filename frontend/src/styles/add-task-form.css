@@ -82,7 +82,10 @@ body[class='dark-theme'] .add-task-form-btns {
     font-weight: 700;
 }
 
-
+.board-btn img{
+    width: 30px;
+    margin-left: -8px;
+}
 
 .add-task-form input[type="radio"] {
     margin-right: .3rem;

@@ -48,6 +48,7 @@ export default function AddBoardForm() {
       );
 
       if (response.data && response.data.id) {
+     
         localStorage.setItem("active_board", response.data.id);
       }
 

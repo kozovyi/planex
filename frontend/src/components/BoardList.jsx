@@ -26,13 +26,13 @@ export default function BoardList({ onBoardSelect }) {
         setBoards(fetchedBoards);
 
         const activeBoardId = localStorage.getItem("active_board");
-        console.log("Active board ID from localStorage:", activeBoardId);
 
         if (activeBoardId && fetchedBoards.some(board => board.id === activeBoardId)) {
           setSelectedBoardId(activeBoardId);
           onBoardSelect(activeBoardId);
         } else if (fetchedBoards.length > 1) {
           const fallbackId = fetchedBoards[0].id;
+           
           localStorage.setItem("active_board", fallbackId);
           setSelectedBoardId(fallbackId);
           onBoardSelect(fallbackId);
@@ -52,6 +52,8 @@ export default function BoardList({ onBoardSelect }) {
   const handleChange = (e) => {
     const boardId = e.target.value;
     console.log("Selected board ID:", boardId);
+    console.log("Previous board ID:", localStorage.getItem("previous_board"));
+     
     localStorage.setItem("active_board", boardId);
     setSelectedBoardId(boardId);
     onBoardSelect(boardId);

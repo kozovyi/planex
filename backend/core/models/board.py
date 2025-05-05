@@ -1,4 +1,4 @@
-from sqlalchemy import Index, ForeignKey, CheckConstraint, String, text, Float
+from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from uuid import UUID
 from typing import TYPE_CHECKING
@@ -23,4 +23,8 @@ class Boards(Base):
         back_populates="boards", secondary="permissions"
     )
 
-    tasks: Mapped[list["Tasks"]] = relationship(back_populates="board")
+    tasks: Mapped[list["Tasks"]] = relationship(
+        back_populates="board",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )

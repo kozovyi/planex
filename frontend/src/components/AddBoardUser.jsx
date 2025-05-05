@@ -45,6 +45,7 @@ export default function AddBoardUser() {
       );
 
       if (response.data && response.data.id) {
+     
         localStorage.setItem("active_board", response.data.id);
       }
 

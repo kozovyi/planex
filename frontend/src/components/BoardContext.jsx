@@ -8,7 +8,18 @@ export function BoardProvider({ children }) {
   });
 
   useEffect(() => {
+    const previousBoardId = localStorage.getItem("active_board");
+    
+    if (previousBoardId && previousBoardId !== activeBoardId) {
+      localStorage.setItem("previous_board", previousBoardId);
+    }
+
+     
     localStorage.setItem("active_board", activeBoardId);
+
+    console.log("-------------------")
+    console.log("-------------------")
+
   }, [activeBoardId]);
 
   return (
