@@ -28,7 +28,10 @@ const LoginPage = () => {
         }
       );
       document.cookie = `access_token=${response.data.access_token}; path=/; max-age=36000; secure`;
-      
+      localStorage.setItem("user_email", email);
+      console.log('--------------------------------')
+      console.log(localStorage.getItem('user_email'))
+      console.log('--------------------------------')
 
       navigate('/');
       // localStorage.setItem("token", response.data.access_token);
@@ -43,8 +46,10 @@ const LoginPage = () => {
         email,
         password,
       });
-
+      
       alert("Registration success!");
+
+    
     } catch (error) {
       alert("Registration eror");
     }

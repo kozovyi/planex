@@ -3,12 +3,14 @@ from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID, uuid1
 from fastapi import HTTPException, status
+from sqlalchemy.orm import selectinload 
 
 
 from core.models.permision import Permissions
 from core.models.base import PermissionStatus
 from schemas.permission_schema import PermissionCreate
 from core.models.board import Boards
+from core.models.user import Users
 
 
 class PermissionRepo:
@@ -56,3 +58,18 @@ class PermissionRepo:
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Failed to fetch boards by user permissions.",
             )
+        
+    @staticmethod
+    async def get_users_by_board_id( board_id: UUID, session: AsyncSession) -> list[Users]:
+        stmt = (
+            select(Boards)
+            .options(selectinload(Boards.users))
+            .where(Boards.id == board_id)
+        )
+        result = await session.execute(stmt)
+        board = result.scalar_one_or_none()
+
+        if not board:
+            return []
+
+        return board.users

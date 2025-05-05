@@ -1,0 +1,75 @@
+.user-list-container {
+    padding: 10px;
+    width: 100%;
+  }
+  
+  .user-list-title {
+    margin-bottom: 16px !important;
+    font-weight: 500 !important;
+  }
+  
+  .user-list {
+    max-height: 280px;
+    overflow-y: auto;
+  }
+  
+  .user-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .user-list-item {
+    background: rgba(255, 255, 255, 0.075);
+    margin-top: 5px;
+    border-radius: 20px;
+  }
+  
+  .user-avatar {
+    background-color: #1976d2 !important;
+  }
+  
+  .owner-badge {
+    display: inline-block;
+    background-color: #4caf50;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-top: 4px;
+  }
+  
+  .loading-text, .error-text, .no-users-text {
+    text-align: center;
+    padding: 20px;
+    color: #666;
+  }
+  
+  .error-text {
+    color: #f44336;
+  }
+  
+  /* Стилі для кнопки видалення */
+  .delete-btn {
+    color: #f44336 !important;
+    transition: all 0.2s ease !important;
+  }
+  
+  .delete-btn:hover {
+    background-color: rgba(244, 67, 54, 0.1) !important;
+    color: #d32f2f !important;
+  }
+  
+  .delete-btn:disabled {
+    color: #bdbdbd !important;
+  }
+  
+  /* Анімація при наведенні для кнопки видалення */
+  .delete-btn svg {
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .delete-btn:hover svg {
+    transform: scale(1.1);
+  }

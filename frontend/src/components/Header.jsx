@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddTaskForm from "./AddTaskForm";
 import AddBoardForm from "./AddBoardForm";
 import AddBoardUser from "./AddBoardUser";
@@ -6,6 +6,7 @@ import Modal from "./Modal";
 import Search from "./Search";
 import BoardList from "./BoardList";
 import CopyBoardIdButton from "./CopyBoardIdButton";
+import UserListModal from "./UserListModal";
 import '../styles/add-task-form.css';
 
 export default function Header({ setDataFromSearch }) {
@@ -13,6 +14,22 @@ export default function Header({ setDataFromSearch }) {
   const [isAddingTask, setIsAddingTask] = useState(false);
   const [isAddingBoard, setIsAddingBoard] = useState(false);
   const [isAddingBoardUser, setIsAddingBoardUser] = useState(false);
+  const [isViewingUsers, setIsViewingUsers] = useState(false);
+  
+  // Get current board ID from localStorage or state management
+  useEffect(() => {
+    // Try to get current board ID from localStorage if you're using it
+    const currentBoardId = localStorage.getItem('currentBoardId');
+    if (currentBoardId) {
+      setSelectedBoardId(currentBoardId);
+    }
+  }, []);
+  
+  const handleBoardSelect = (boardId) => {
+    setSelectedBoardId(boardId);
+    // Optional: save to localStorage for persistence
+    localStorage.setItem('currentBoardId', boardId);
+  };
 
   return (
     <div className="header">
@@ -20,11 +37,13 @@ export default function Header({ setDataFromSearch }) {
         <div className="controls">
           <img src="/logo.png" alt="Logo" className="logo" />
           <Search setDataFromSearch={setDataFromSearch} />
-          <BoardList onBoardSelect={setSelectedBoardId} />
+          <BoardList onBoardSelect={handleBoardSelect} />
           <CopyBoardIdButton />
+          
           <button
             className="search-btn people-btn"
             onClick={async (e) => {
+              setIsViewingUsers(true);
             }}
           >
             {<img src="group-64.png" alt="Search" />}
@@ -78,6 +97,12 @@ export default function Header({ setDataFromSearch }) {
           title="Join to board"
           onClose={() => setIsAddingBoardUser(false)}
           height={250}
+        />
+        
+        <UserListModal
+          isOpen={isViewingUsers}
+          onClose={() => setIsViewingUsers(false)}
+          boardId={selectedBoardId}
         />
       </div>
     </div>
