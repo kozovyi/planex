@@ -48,6 +48,19 @@ export default function Header({ setDataFromSearch }) {
           >
             {<img src="group-64.png" alt="Search" />}
           </button>
+
+          <button
+            className="search-btn leave-btn"
+            onClick={async (e) => {
+              ;
+            }}
+          >
+            {<img src="icons8-exit-50.png" alt="Search" />}
+          </button>
+
+
+
+
         </div>
 
         <div style={{ display: "flex", gap: ".5rem" }}>
