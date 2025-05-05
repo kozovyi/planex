@@ -17,12 +17,14 @@ export default function UserListModal({ isOpen, onClose, boardId }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentUserId, setCurrentUserId] = useState(null);
+  const [currentUserEmail, setCurrentUserEmail] = useState(null);
   const [isCurrentUserOwner, setIsCurrentUserOwner] = useState(false);
 
   useEffect(() => {
     const userId = localStorage.getItem("user_email");
     if (userId) {
       setCurrentUserId(userId);
+      setCurrentUserEmail(userId); // Зберігаємо також email поточного користувача
     }
 
     if (isOpen && boardId) {
@@ -45,7 +47,6 @@ export default function UserListModal({ isOpen, onClose, boardId }) {
 
       const data = await response.json();
 
-
       const userList = data.filter((item) => item.id && item.email);
       const ownerEntries = data.filter((item) => item.role === "Owner");
       
@@ -65,20 +66,13 @@ export default function UserListModal({ isOpen, onClose, boardId }) {
       );
       
       setIsCurrentUserOwner(isOwner);
-
-
-      
     } catch (err) {
       console.error("Error fetching board users:", err);
-      setError("Failed to load users. Please try again.");
+      setError("Failed to load users.");
     } finally {
       setLoading(false);
     }
   };
-
-
-
-
   
   const handleDeleteUser = async (userId) => {
     if (ownerIds.includes(userId)) {
@@ -144,9 +138,14 @@ export default function UserListModal({ isOpen, onClose, boardId }) {
                   <ListItemText
                     primary={user.email}
                     secondary={
-                      ownerIds.includes(user.id) ? (
-                        <span className="owner-badge">Owner</span>
-                      ) : null
+                      <>
+                        {ownerIds.includes(user.id) && (
+                          <span className="owner-badge">Owner</span>
+                        )}
+                        {user.email === currentUserEmail && (
+                          <span className="current-user-badge">You</span>
+                        )}
+                      </>
                     }
                   />
 
