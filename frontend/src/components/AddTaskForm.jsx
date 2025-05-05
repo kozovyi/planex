@@ -9,7 +9,7 @@ export default function AddTaskForm() {
   const [hasError, setHasError] = useState(false);
   const [title, setTitle] = useState('');
   const [desc, setDesc] = useState('');
-  const [labels, setLabels] = useState('');
+  const [labels, setLabels] = useState(null);
   const [status, setStatus] = useState('Todo');
   const [success, setSuccess] = useState(false);
   const [boardId, setBoardId] = useState('');
@@ -27,7 +27,7 @@ export default function AddTaskForm() {
   function resetFormState() {
     setTitle('');
     setDesc('');
-    setLabels('');
+    setLabels(null);
     setStatus('Todo');
   }
 
@@ -82,13 +82,6 @@ export default function AddTaskForm() {
           show={hasError}
           text="Select active board"
           onClick={() => setHasError(false)}
-        />
-      )}
-      {success && (
-        <Alert
-          show={success}
-          text="Task successfully created!"
-          onClick={() => setSuccess(false)}
         />
       )}
       <form

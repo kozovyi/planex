@@ -1,23 +1,28 @@
 import { useState, useEffect } from "react";
-import '../styles/alert.css';
+import "../styles/alert.css";
 
 export default function Alert({ text, show, onClick }) {
-  const [showAlert, setShowAlert] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    setShowAlert(show);
+    if (show) {
+      setVisible(true);
+
+      const timer = setTimeout(() => {
+        setVisible(false);
+        if (onClick) onClick();
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    }
   }, [show]);
 
-  if (!show) {
-    return '';
-  }
-
   return (
-    <div className={`alert-banner ${!showAlert ? 'hidden' : ''}`.trim()}>
+    <div className={`alert-banner ${visible ? "show" : "hide"}`}>
       <span>{text}</span>
       <button
         onClick={() => {
-          setShowAlert(!show)
+          setVisible(false);
           if (onClick) onClick();
         }}
       >

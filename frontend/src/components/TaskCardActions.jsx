@@ -1,10 +1,8 @@
 import { TASK_STATUS } from "../utils/constants";
 import { useState } from "react";
-import AddTaskForm from "./AddTaskForm";
+import EditTaskForm from "./EditTaskForm";
 import Modal from "./Modal";
 import { getAccessToken } from "../utils/helpers";
-
-
 
 export default function TaskCardActions({ task, onClose, refreshTasks }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -81,7 +79,6 @@ export default function TaskCardActions({ task, onClose, refreshTasks }) {
     }
   };
   
-
   const deleteTask = async (taskId) => {
     try {
       const token = getAccessToken();
@@ -110,6 +107,10 @@ export default function TaskCardActions({ task, onClose, refreshTasks }) {
       console.error("Error deleting task:", error);
       return false;
     }
+  };
+
+  const handleEditClose = () => {
+    setIsEditing(false);
   };
 
   if (!task) return null;
@@ -149,17 +150,13 @@ export default function TaskCardActions({ task, onClose, refreshTasks }) {
       </div>
       <Modal
         title="Edit Task"
-        content={<AddTaskForm 
+        content={<EditTaskForm 
           task={task} 
-          isEditing={true} 
-          onSave={() => {
-            setIsEditing(false);
-            if (refreshTasks) refreshTasks();
-            onClose();
-          }} 
+          onClose={handleEditClose} 
+          refreshTasks={refreshTasks}
         />}
         isOpen={isEditing}
-        onClose={() => setIsEditing(false)}
+        onClose={handleEditClose}
       />
     </>
   );

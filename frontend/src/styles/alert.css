@@ -3,7 +3,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgb(255, 77, 77);
     background: rgb(245, 61, 61);
     color: #fff;
     padding: .65rem 1rem;
@@ -14,6 +13,21 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 99vw;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+}
+
+.alert-banner.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    pointer-events: auto;
+}
+
+.alert-banner.hide {
+    opacity: 0;
+    transform: translate(-50%, -20%);
+    pointer-events: none;
 }
 
 .alert-banner button {

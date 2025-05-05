@@ -22,6 +22,13 @@ export default function Header({ setDataFromSearch }) {
           <Search setDataFromSearch={setDataFromSearch} />
           <BoardList onBoardSelect={setSelectedBoardId} />
           <CopyBoardIdButton />
+          <button
+            className="search-btn people-btn"
+            onClick={async (e) => {
+            }}
+          >
+            {<img src="group-64.png" alt="Search" />}
+          </button>
         </div>
 
         <div style={{ display: "flex", gap: ".5rem" }}>
