@@ -25,7 +25,7 @@ services:
     ports: 
       - "8000:8000"
     command: >
-      sh -c "python3 run.py"
+      sh -c "alembic upgrade head && python3 run.py"
 
   frontend:
     build:
