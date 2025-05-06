@@ -8,7 +8,7 @@ export default function Column({ column, activeBoardId, setDataFromSearch, check
   const [allTasks, setAllTasks] = useState([]);   
   const [currentTask, setCurrentTask] = useState(null);   
   const [searchTerm] = useState('');   
-  const [sortBy, setSortBy] = useState('created_at'); // Змінено дефіс на підкреслення
+  const [sortBy, setSortBy] = useState('created_at'); 
   
   
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function Column({ column, activeBoardId, setDataFromSearch, check
       if (savedTasks) {
         try {
           const parsedTasks = JSON.parse(savedTasks);
-          setAllTasks(parsedTasks);  // <- Замість fetch, оновлюємо allTasks вручну
+          setAllTasks(parsedTasks);  
         } catch (error) {
           console.error("Помилка парсингу збережених задач:", error);
         }
@@ -54,12 +54,10 @@ export default function Column({ column, activeBoardId, setDataFromSearch, check
     }   
   }, [activeBoardId]);    
 
-  // Виклик fetchTasks при першому рендері   
   useEffect(() => {     
     fetchTasks();   
   }, [fetchTasks]);    
   
-  // Фільтрація та сортування задач для цієї колонки   
   useEffect(() => {     
     const tasksForColumn = allTasks.filter(task =>        
       task.status === column.label     

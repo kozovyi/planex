@@ -1,7 +1,6 @@
 version: "3.9"
 
 services:
-
   db-postgres:
     image: postgres
     container_name: planex-db-postgres
@@ -27,6 +26,21 @@ services:
       - "8000:8000"
     command: >
       sh -c "python3 run.py"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: planex-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - app-backend
 
 volumes:
   postgres_data:

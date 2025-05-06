@@ -16,7 +16,6 @@ export default function Task({ task, onSelect, children }) {
     return '';
   }
 
-  // Adapt to API response structure
   const { title, description: desc, tags } = task;
   const labels = typeof tags === 'string' ? tags.trim().split(/\s+/) : [];
 

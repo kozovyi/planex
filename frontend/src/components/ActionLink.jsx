@@ -17,7 +17,7 @@ export default function ActionLink({ titleFilter, setDataFromSearch}) {
 
     const url = `http://127.0.0.1:8000/api/api_v1/task/tasks-by-board-title?title_filter=${titleFilter}&board_id=${boardId}`;
 
-    setLoading(true); // Показуємо, що запит 
+    setLoading(true); 
 
     try {
       const response = await fetch(url, {

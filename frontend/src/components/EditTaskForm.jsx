@@ -13,13 +13,11 @@ export default function EditTaskForm({ task, onClose, refreshTasks }) {
   const [labels, setLabels] = useState('');
   const [success, setSuccess] = useState(false);
 
-  // Load task data into form fields when the component mounts
   useEffect(() => {
     if (task) {
       setTitle(task.title || '');
       setDesc(task.description || '');
       
-      // Handle tags based on their format
       if (typeof task.tags === 'string') {
         setLabels(task.tags);
       } else if (Array.isArray(task.tags)) {
@@ -90,12 +88,10 @@ export default function EditTaskForm({ task, onClose, refreshTasks }) {
       console.log('Task updated successfully:', response.data);
       setSuccess(true);
       
-      // Update the task list
       if (refreshTasks) {
         refreshTasks();
       }
       
-      // Close the modal after a delay
 
     } catch (error) {
       console.error('Error updating task:', error);

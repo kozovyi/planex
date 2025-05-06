@@ -17,9 +17,7 @@ export default function Header({ setDataFromSearch }) {
   const [isAddingBoardUser, setIsAddingBoardUser] = useState(false);
   const [isViewingUsers, setIsViewingUsers] = useState(false);
 
-  // Get current board ID from localStorage or state management
   useEffect(() => {
-    // Try to get current board ID from localStorage if you're using it
     const currentBoardId = localStorage.getItem("active_board");
     if (currentBoardId) {
       setSelectedBoardId(currentBoardId);
@@ -28,7 +26,6 @@ export default function Header({ setDataFromSearch }) {
 
   const handleBoardSelect = (boardId) => {
     setSelectedBoardId(boardId);
-    // Optional: save to localStorage for persistence
      
     localStorage.setItem("active_board", boardId);
   };
@@ -41,7 +38,6 @@ export default function Header({ setDataFromSearch }) {
       return;
     }
 
-    // Підтвердження видалення дошки
     if (!confirm("Are you sure you want to delete this board? This action cannot be undone.")) {
       return;
     }
@@ -61,17 +57,12 @@ export default function Header({ setDataFromSearch }) {
         throw new Error("Failed to delete board");
       }
 
-      // Успішно видалили дошку
       alert("Board has been successfully deleted");
       
-      // Оновлюємо поточну дошку або очищаємо її
       localStorage.removeItem('active_board');
       window.location.reload();
       
       
-      // Можна також оновити список дощок, якщо такий функціонал є
-      // Наприклад, якщо BoardList має метод оновлення
-      // updateBoardList();
       
     } catch (err) {
       console.error("Error deleting board:", err);
@@ -87,13 +78,11 @@ export default function Header({ setDataFromSearch }) {
       return;
     }
 
-    // Підтвердження виходу з дошки
     if (!confirm("Are you sure you want to leave this board?")) {
       return;
     }
 
     try {
-      // Спочатку отримуємо поточний email користувача з localStorage
       const currentUserEmail = localStorage.getItem("user_email");
 
       if (!currentUserEmail) {
@@ -101,7 +90,6 @@ export default function Header({ setDataFromSearch }) {
         return;
       }
 
-      // Отримуємо список користувачів дошки, щоб знайти ID за email
       const usersResponse = await fetch(
         `http://127.0.0.1:8000/api/api_v1/board/by-board?board_id=${selectedBoardId}`
       );
@@ -113,7 +101,6 @@ export default function Header({ setDataFromSearch }) {
       const usersData = await usersResponse.json();
       const userList = usersData.filter((item) => item.id && item.email);
 
-      // Шукаємо користувача з поточним email
       const currentUser = userList.find(
         (user) => user.email === currentUserEmail
       );
@@ -125,7 +112,6 @@ export default function Header({ setDataFromSearch }) {
 
       const currentUserId = currentUser.id;
 
-      // Тепер використовуємо отриманий ID для видалення користувача з дошки
       const response = await fetch(
         `http://127.0.0.1:8000/api/api_v1/board/delete-user?user_id=${currentUserId}&board_id=${selectedBoardId}`,
         {
@@ -157,9 +143,6 @@ export default function Header({ setDataFromSearch }) {
 
       // console.log("-------------------")
 
-      // Можна також оновити список дощок, якщо такий функціонал є
-      // Наприклад, якщо BoardList має метод оновлення
-      // updateBoardList();
     } catch (err) {
       console.error("Error leaving board:", err);
       alert("Failed to leave board. Please try again.");

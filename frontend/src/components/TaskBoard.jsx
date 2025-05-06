@@ -30,7 +30,7 @@ export default function TaskBoard({setDataFromSearch, checkDataFromSearch})
           checkDataFromSearch={checkDataFromSearch}
           key={i}
           column={column}
-          activeBoardId={activeBoardId}  // Передаємо activeBoardId як пропс
+          activeBoardId={activeBoardId}  
         />
       ))}
     </section>

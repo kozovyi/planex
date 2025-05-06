@@ -4,6 +4,7 @@ import Login, { Email, Password, Button } from '@react-login-page/page3';
 import defaultBannerImage from '@react-login-page/page3/bg.jpeg';
 import axios from 'axios';
 import "../styles/LoginPage.css";
+import { getAccessToken } from '../utils/helpers';
 import { getCookie } from "../utils/helpers";
 
 const LoginPage = () => {
@@ -33,6 +34,8 @@ const LoginPage = () => {
       console.log(localStorage.getItem('user_email'))
       console.log('--------------------------------')
 
+
+
       navigate('/');
       // localStorage.setItem("token", response.data.access_token);
     } catch (error) {
@@ -47,8 +50,62 @@ const LoginPage = () => {
         password,
       });
       
-      alert("Registration success!");
 
+      const data = new URLSearchParams();
+      data.append("username", email);
+      data.append("password", password);
+
+      const response1 = await axios.post(
+        'http://localhost:8000/api/api_v1/auth/login',
+        data,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
+        }
+      );
+      document.cookie = `access_token=${response1.data.access_token}; path=/; max-age=36000; secure`;
+
+
+      const token = getAccessToken();
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      };
+
+      const boards = [
+        { title: 'Work tasks', description: 'Tasks related to work' },
+        { title: 'Home tasks', description: 'Tasks related to home' },
+      ];
+
+      try {
+        for (const board of boards) {
+          const response = await axios.post(
+            'http://127.0.0.1:8000/api/api_v1/board/',
+            board,
+            { headers }
+          );
+
+          if (response.data && response.data.id) {
+            // можна зберегти останню активну дошку
+            localStorage.setItem('active_board', response.data.id);
+          }
+        }
+
+        setSuccess(true);
+        resetFormState();
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      } catch (error) {
+        console.error('Error creating board:', error);
+      }
+      
+
+      alert("Registration success!");
+      
     
     } catch (error) {
       alert("Registration eror");

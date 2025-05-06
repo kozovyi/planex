@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ActionLink from "./ActionLink";
 
 export default function Search({setDataFromSearch}) {
-  const [titleFilter, setTitleFilter] = useState(""); // Локальний стан для фільтра
+  const [titleFilter, setTitleFilter] = useState(""); 
 
   return (
     <>

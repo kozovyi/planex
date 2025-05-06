@@ -2,7 +2,6 @@
 import React from 'react';
 
 export default function SortActions({ sortBy, setSortBy }) {
-  // Перевіряємо, чи передано функцію setSortBy
   const handleChange = (e) => {
     if (typeof setSortBy === 'function') {
       setSortBy(e.target.value);

@@ -51,9 +51,9 @@ export default function AddTaskForm() {
       status,
       tags: labelsArray
     };
-    console.log(payload)
-
+    
     try {
+      console.log(payload)
       const boardId = localStorage.getItem("active_board");
       await axios.post(
         `http://127.0.0.1:8000/api/api_v1/task/?board_id=${boardId}`,

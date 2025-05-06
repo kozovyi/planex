@@ -55,7 +55,6 @@ export default function AddBoardForm() {
       resetFormState();
       setSuccess(true);
       
-      // Reload the page to show the new board
       setTimeout(() => {
         window.location.reload();
       }, 500);

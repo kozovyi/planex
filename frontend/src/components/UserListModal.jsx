@@ -24,7 +24,7 @@ export default function UserListModal({ isOpen, onClose, boardId }) {
     const userId = localStorage.getItem("user_email");
     if (userId) {
       setCurrentUserId(userId);
-      setCurrentUserEmail(userId); // Зберігаємо також email поточного користувача
+      setCurrentUserEmail(userId); 
     }
 
     if (isOpen && boardId) {
@@ -54,10 +54,8 @@ export default function UserListModal({ isOpen, onClose, boardId }) {
       setUsers(userList);
       setOwnerIds(owners);
       
-      // Отримуємо поточну пошту
       const currentUserEmail = localStorage.getItem("user_email");
       
-      // Перевіряємо, чи поточний email належить користувачу, який є owner
       const isOwner = ownerEntries.some((owner) =>
         userList.some(
           (user) =>

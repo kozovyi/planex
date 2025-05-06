@@ -52,13 +52,11 @@ export default function BoardList({ onBoardSelect }) {
   const handleChange = (e) => {
     const boardId = e.target.value;
     console.log("Selected board ID:", boardId);
-    console.log("Previous board ID:", localStorage.getItem("previous_board"));
      
     localStorage.setItem("active_board", boardId);
     setSelectedBoardId(boardId);
     onBoardSelect(boardId);
     
-    // Додаємо подію для оновлення інших вкладок
     window.dispatchEvent(new Event('storage'));
   };
 
