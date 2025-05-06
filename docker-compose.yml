@@ -26,6 +26,7 @@ services:
       - "8000:8000"
     command: >
       sh -c "alembic upgrade head && python3 run.py"
+      
 
   frontend:
     build:
