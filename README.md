@@ -1,4 +1,5 @@
-## Local Setup
-3. Install dependencies `npm i`
-4. Build `npm run build`
-5. Serve locally `npm run dev`
+# Local run
+
+## 1.    copy repository
+## 2.    docker-compose -p planex up --build
+## 3.    open http://localhost:5173/login
