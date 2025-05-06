@@ -38,7 +38,7 @@ export default function UserListModal({ isOpen, onClose, boardId }) {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/api_v1/board/by-board?board_id=${boardId}`
+        `http://localhost:8000/api/api_v1/board/by-board?board_id=${boardId}`
       );
 
       if (!response.ok) {
@@ -88,7 +88,7 @@ export default function UserListModal({ isOpen, onClose, boardId }) {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/api_v1/board/delete-user?user_id=${userId}&board_id=${boardId}`,
+        `http://localhost:8000/api/api_v1/board/delete-user?user_id=${userId}&board_id=${boardId}`,
         {
           method: "GET",
           headers: {

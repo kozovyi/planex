@@ -15,7 +15,7 @@ export default function ActionLink({ titleFilter, setDataFromSearch}) {
       return;
     }
 
-    const url = `http://127.0.0.1:8000/api/api_v1/task/tasks-by-board-title?title_filter=${titleFilter}&board_id=${boardId}`;
+    const url = `http://localhost:8000/api/api_v1/task/tasks-by-board-title?title_filter=${titleFilter}&board_id=${boardId}`;
 
     setLoading(true); 
 

@@ -56,7 +56,7 @@ export default function AddTaskForm() {
       console.log(payload)
       const boardId = localStorage.getItem("active_board");
       await axios.post(
-        `http://127.0.0.1:8000/api/api_v1/task/?board_id=${boardId}`,
+        `http://localhost:8000/api/api_v1/task/?board_id=${boardId}`,
         payload,
         {
           headers: {

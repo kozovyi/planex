@@ -16,7 +16,7 @@ export default function BoardList({ onBoardSelect }) {
       }
 
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/api_v1/board/get-all", {
+        const response = await axios.get("http://localhost:8000/api/api_v1/board/get-all", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

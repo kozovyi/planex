@@ -75,7 +75,7 @@ export default function EditTaskForm({ task, onClose, refreshTasks }) {
 
     try {
       const response = await axios.put(
-        `http://127.0.0.1:8000/api/api_v1/task/${task.id}`,
+        `http://localhost:8000/api/api_v1/task/${task.id}`,
         payload,
         {
           headers: {

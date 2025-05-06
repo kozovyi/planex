@@ -37,7 +37,7 @@ export default function AddBoardForm() {
 
     try {
       const response = await axios.post(
-        'http://127.0.0.1:8000/api/api_v1/board/',
+        'http://localhost:8000/api/api_v1/board/',
         payload,
         {
           headers: {

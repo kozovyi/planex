@@ -33,7 +33,7 @@ export default function Column({ column, activeBoardId, setDataFromSearch, check
       
       const token = getAccessToken();       
       const response = await fetch(         
-        `http://127.0.0.1:8000/api/api_v1/task/tasks-by-board?board_id=${activeBoardId}`,         
+        `http://localhost:8000/api/api_v1/task/tasks-by-board?board_id=${activeBoardId}`,         
         {           
           method: 'GET',           
           headers: {             

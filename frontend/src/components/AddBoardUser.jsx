@@ -34,7 +34,7 @@ export default function AddBoardUser() {
 
     try {
         const response = await axios.post(
-        `http://127.0.0.1:8000/api/api_v1/board/add-permission?board_id=${boardId.trim()}`,
+        `http://localhost:8000/api/api_v1/board/add-permission?board_id=${boardId.trim()}`,
         {},
         {
           headers: {

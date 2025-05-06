@@ -47,7 +47,7 @@ export default function TaskCardActions({ task, onClose, refreshTasks }) {
       console.log("Sending task update:", updatedData);
   
       const response = await fetch(
-        `http://127.0.0.1:8000/api/api_v1/task/${taskId}`,
+        `http://localhost:8000/api/api_v1/task/${taskId}`,
         {
           method: 'PUT',
           headers: {
@@ -83,7 +83,7 @@ export default function TaskCardActions({ task, onClose, refreshTasks }) {
     try {
       const token = getAccessToken();
       const response = await fetch(
-        `http://127.0.0.1:8000/api/api_v1/task/${taskId}`,
+        `http://localhost:8000/api/api_v1/task/${taskId}`,
         {
           method: 'DELETE',
           headers: {

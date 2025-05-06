@@ -44,7 +44,7 @@ export default function Header({ setDataFromSearch }) {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/api/api_v1/board/${selectedBoardId}`,
+        `http://localhost:8000/api/api_v1/board/${selectedBoardId}`,
         {
           method: "DELETE",
           headers: {
@@ -91,7 +91,7 @@ export default function Header({ setDataFromSearch }) {
       }
 
       const usersResponse = await fetch(
-        `http://127.0.0.1:8000/api/api_v1/board/by-board?board_id=${selectedBoardId}`
+        `http://localhost:8000/api/api_v1/board/by-board?board_id=${selectedBoardId}`
       );
 
       if (!usersResponse.ok) {
@@ -113,7 +113,7 @@ export default function Header({ setDataFromSearch }) {
       const currentUserId = currentUser.id;
 
       const response = await fetch(
-        `http://127.0.0.1:8000/api/api_v1/board/delete-user?user_id=${currentUserId}&board_id=${selectedBoardId}`,
+        `http://localhost:8000/api/api_v1/board/delete-user?user_id=${currentUserId}&board_id=${selectedBoardId}`,
         {
           method: "GET",
           headers: {
